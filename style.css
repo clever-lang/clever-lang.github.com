@@ -6,6 +6,15 @@ body {
 	font-size: 18px;
 }
 
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 h1 {
 	font-size: 100px;
 	margin-bottom: 0;
@@ -16,6 +25,21 @@ h3 {
 	margin-top: 0;
 }
 
-blockquote {
+.gray {
 	color: #666;
+}
+
+#code pre {
+	text-align: left;
+	background: #DDD;
+	border: 1px solid #BBB;
+	padding: 3px;
+	font-size: 15px;
+}
+
+#code {
+	margin: auto;
+	width: 500px;
+	font-size: 18px;
+	text-align: left;
 }
