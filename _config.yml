@@ -1,6 +1,7 @@
 auto: true
 markdown: rdiscount
 permalink: /:title
+pygments: true
 title: Clever programming language
 rdiscount
   extensions: [smart]
