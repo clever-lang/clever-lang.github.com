@@ -3,7 +3,7 @@ body {
 	text-align: center;
 	font-family: Arial;
 	margin-top: 30px;
-	font-size: 18px;
+	font-size: 17px;
 }
 
 a {
@@ -49,7 +49,7 @@ h3 {
 }
 
 #links ul {
-	width: 330px;
+	width: 500px;
 	margin: auto;
 	padding: 0;
 }
