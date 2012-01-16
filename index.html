@@ -1,16 +1,9 @@
 ---
-layout: default
-title: home
+layout: base
+title: Clever programming language
 ---
-<html>
-<head>
- <title>Clever programming language</title>
- <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
- <link rel="stylesheet" type="text/css" href="style.css"/>
-</head>
-<body>
- 	<div id="fb-root"></div>
-	<script>
+ <div id="fb-root"></div>
+ <script>
 	(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];
 	  if (d.getElementById(id)) return;
@@ -18,20 +11,14 @@ title: home
 	  js.src = "http://connect.facebook.net/en_US/all.js#xfbml=1&appId=138005579607147";
 	  fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
-	</script>
+ </script>
 
- <h1>Clever<img src="logo.jpg"/></h1>
- <h3>programming language</h3>
- <blockquote class="gray">
-  Clever is a general purpose static programming language, written in C++, that aims to be small</br>
-  but supplying an useful set of features (usually known from other programming languages).
- </blockquote>
+ {% include nav.html %}
 
  <div id="code">
   <pre><strong>import std.io;</strong>
 <strong>println</strong>("Hello world!");</pre>
  </div>
- <div class="fb-like-box" data-href="https://www.facebook.com/pages/Clever-Programming-Language/273749636014241" data-width="292" data-height="80" data-colorscheme="dark" data-show-faces="false" data-border-color="#bbbbbb" data-stream="false" data-header="false"></div>
 
  <h2>Get involved!</h2>
  <p>
@@ -41,13 +28,5 @@ title: home
 
  <p><strong>IRC:</strong> <span class="gray">irc.freenode.net / #clever</span></p>
 
+ <div class="fb-like-box" data-href="https://www.facebook.com/pages/Clever-Programming-Language/273749636014241" data-width="292" data-height="80" data-colorscheme="dark" data-show-faces="false" data-border-color="#bbbbbb" data-stream="false" data-header="false"></div>
 
- <div id="links">
-   <ul>
-   {% for post in site.posts %}
-     <li>- <a href="{{ post.url }}">{{ post.title }}</a></li>
-   {% endfor %}
-   </ul>
- </div>
-</body>
-</html>

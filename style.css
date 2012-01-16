@@ -43,3 +43,34 @@ h3 {
 	font-size: 18px;
 	text-align: left;
 }
+
+#links {
+	margin: auto;
+}
+
+#links ul {
+	width: 330px;
+	margin: auto;
+	padding: 0;
+}
+
+#links ul li {
+	list-style-type: none;
+	border: 1px solid #666;
+	padding: 2px 10px 2px 10px;
+	display: inline;
+}
+
+#links ul li:hover {
+	background-color: #EEE;
+}
+
+#post {
+	width: 700px;
+	margin: auto;
+	text-align: left;
+}
+
+#post h2 {
+	border-bottom: 1px solid #CCC;
+}

@@ -1,2 +1,5 @@
-# test
-## test
+---
+layout: post
+---
+
+Text text text! :-)
