@@ -74,3 +74,11 @@ h3 {
 #post h2 {
 	border-bottom: 1px solid #CCC;
 }
+
+#footer {
+	margin: auto;
+	padding: 6px;
+	width: 700px;
+	font-size: 12px;
+	color: #666;
+}
