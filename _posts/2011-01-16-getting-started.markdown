@@ -2,4 +2,6 @@
 layout: post
 ---
 
-Text text text! :-)
+{% highlight %}
+cd ~
+{% endhighlight %}
