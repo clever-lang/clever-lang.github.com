@@ -2,6 +2,6 @@
 layout: post
 ---
 
-{% highlight %}
+{% highlight bash %}
 cd ~
 {% endhighlight %}
