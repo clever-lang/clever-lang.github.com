@@ -19,6 +19,12 @@ Array<Int> arr;
 Bool is = true;
 {% endhighlight %}
 
+##### const qualifier #####
+
+{% highlight ruby %}
+const Int i = 10;
+{% endhighlight %}
+
 #### Standards package
 
 The standards (std) package counts with the following modules:
@@ -49,10 +55,17 @@ for (Int i = 0; i < 10; ++i) {
 }
 {% endhighlight %}
 
-#### Function syntax
+#### Function syntax ####
 
 {% highlight ruby %}
 Int foo(Int bar) {
 	return bar;
 }
+{% endhighlight %}
+
+#### Importing module ####
+
+{% highlight ruby %}
+import std.io;
+import std.regex as re;
 {% endhighlight %}

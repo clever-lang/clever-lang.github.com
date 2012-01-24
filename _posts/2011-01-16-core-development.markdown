@@ -14,3 +14,5 @@ Other rule are:
  * Headers files uses .h
  * Indentation: tab (width: 4)
  * Line ending: LF (Unix)
+
+[1] - [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
