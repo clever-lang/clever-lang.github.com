@@ -6,13 +6,20 @@ The *Clever Team* is usually on-line at IRC #clever (irc.freenode.net)
 
 ### Coding standards
 
-Currently we have used the Google C++ Style Guide [1] as base for the coding standards on the project.
+We mostly code based on the Google C++ Style Guide[1], which seems sane enough.
+The LLVM[2] one is also quite nice. 
 
-Other rule are:
+> Use the .cc extension for C++ source files and .h for C++ headers, hopefully 
+> your compiler is smart enough to identify C++ source inside a .h (don't worry, 
+> GCC and Clang are!). Oh, I almost forgot, please use tabs instead of spaces, 
+> UTF-8 file encoding and UNIX file endings (Line feed a.k.a. \n).
 
- * C++ files uses .cc
- * Headers files uses .h
- * Indentation: tab (width: 4)
- * Line ending: LF (Unix)
+If you don't know how to contribute, but know how to code, it'd be nice if you
+could implement one of the ideas from our whishlist: 
+[TODO List & Ideas](https://github.com/clever-lang/clever/wiki/TODO-List-&-Ideas)
+
+***Git help:*** - [Fork a repo](http://help.github.com/fork-a-repo/) - [Send pull requests](http://help.github.com/send-pull-requests/)
 
 [1] - [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
+
+[2] - [LLVM Coding Standards](http://llvm.org/docs/CodingStandards.html)

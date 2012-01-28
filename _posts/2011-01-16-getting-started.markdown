@@ -15,11 +15,22 @@ some failures!
 Int i = 10;
 Double j = 1.2;
 String str = "foo";
-Array<Int> arr;
 Bool is = true;
+Array<Int> arr;
+Map<Int, String> map;
 {% endhighlight %}
 
+Native data types in Clever are *first-class object*. This means that you can do:
+
+{% highlight ruby %}
+"hello world!".toUpper()
+{% endhighlight %}
+
+
 ##### const qualifier #####
+
+You can mark a variable to not be changed along your code. Just use the `const`
+qualifier.
 
 {% highlight ruby %}
 const Int i = 10;
