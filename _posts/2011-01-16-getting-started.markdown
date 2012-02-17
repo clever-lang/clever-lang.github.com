@@ -45,7 +45,7 @@ The standards (std) package counts with the following modules:
 * Math
 * Net
 * OS
-* Reflection
+* <a href="/modules-reflection">Reflection</a>
 * Regex
 
 #### Control flow ####
