@@ -1,25 +1,31 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Getting started! &mdash; Clever vv1.0.0 documentation</title>
+    <title>Getting started! &mdash; Clever v1.0.0 documentation</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     'v1.0.0',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Clever vv1.0.0 documentation" href="index.html" />
+    <link rel="top" title="Clever v1.0.0 documentation" href="index.html" />
     <link rel="next" title="Language reference" href="reference/index.html" />
     <link rel="prev" title="Clever documentation" href="index.html" /> 
   </head>
@@ -36,7 +42,7 @@
         <li class="right" >
           <a href="index.html" title="Clever documentation"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Clever vv1.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -60,23 +66,25 @@ Enter in the clever source directory and run <tt class="docutils literal"><span 
 </div>
 <div class="section" id="native-data-types">
 <h2>Native data types<a class="headerlink" href="#native-data-types" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><pre>Int i = 10;
-Double j = 1.2;
-String str = "foo";
-Bool is = true;
-Array&lt;Int&gt; arr;
-Map&lt;Int, String&gt; map;</pre>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">Int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">Double</span> <span class="n">j</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;foo&quot;</span><span class="p">;</span>
+<span class="n">Bool</span> <span class="n">is</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="n">Array</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">Int</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">;</span>
+</pre></div>
 </div>
 <p>Native data types in Clever are first-class object. This means that you
 can do:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;hello world!&quot;</span><span class="o">.</span><span class="n">toUpper</span><span class="p">()</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="s">&quot;hello world!&quot;</span><span class="p">.</span><span class="n">toUpper</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="section" id="const-qualifier">
 <h3>const qualifier<a class="headerlink" href="#const-qualifier" title="Permalink to this headline">¶</a></h3>
 <p>You can mark a variable to not be changed along your code. Just use the
 const qualifier.</p>
-<div class="highlight-python"><pre>const Int i = 10;</pre>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="k">const</span> <span class="n">Int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -84,30 +92,34 @@ const qualifier.</p>
 <h2>Control flow<a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="if-statements">
 <h3>if statements<a class="headerlink" href="#if-statements" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><pre>if (bar()) {
-}</pre>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">bar</span><span class="p">())</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="for-statements">
 <h3>for statements<a class="headerlink" href="#for-statements" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><pre>for (Int i = 0; i &lt; 10; ++i) {
-}</pre>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="n">Int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="function-declaration">
 <h2>Function declaration<a class="headerlink" href="#function-declaration" title="Permalink to this headline">¶</a></h2>
 <p>The syntax for declaring a function:</p>
-<div class="highlight-python"><pre>Int foo(Int bar) {
-  return bar;
-}</pre>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">Int</span> <span class="n">foo</span><span class="p">(</span><span class="n">Int</span> <span class="n">bar</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">bar</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="section" id="anonymous-function">
 <h3>Anonymous function<a class="headerlink" href="#anonymous-function" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><pre>Auto func = Void () {
-    println("hello world!");
-}
-func(); // Displays 'hello world!'</pre>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">Auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Void</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">func</span><span class="p">();</span> <span class="c1">// Displays &#39;hello world!&#39;</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -117,14 +129,14 @@ func(); // Displays 'hello world!'</pre>
 we can use an alias to refer to its content. See below:</p>
 <div class="section" id="importing-a-module">
 <h3>Importing a module<a class="headerlink" href="#importing-a-module" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">std.io</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">std.regex</span> <span class="kn">as</span> <span class="nn">re</span><span class="p">;</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">regex</span> <span class="n">as</span> <span class="n">re</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="importing-a-source-file">
 <h3>Importing a source file<a class="headerlink" href="#importing-a-source-file" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><pre>import 'foo.clv';
+<div class="highlight-cpp"><pre>import 'foo.clv';
 import 'bar.clv' as bar;</pre>
 </div>
 </div>
@@ -137,56 +149,59 @@ import 'bar.clv' as bar;</pre>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Getting started!</a><ul>
-<li><a class="reference external" href="#installing">Installing</a></li>
-<li><a class="reference external" href="#native-data-types">Native data types</a><ul>
-<li><a class="reference external" href="#const-qualifier">const qualifier</a></li>
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.jpg" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting started!</a><ul>
+<li><a class="reference internal" href="#installing">Installing</a></li>
+<li><a class="reference internal" href="#native-data-types">Native data types</a><ul>
+<li><a class="reference internal" href="#const-qualifier">const qualifier</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#control-flow">Control flow</a><ul>
-<li><a class="reference external" href="#if-statements">if statements</a></li>
-<li><a class="reference external" href="#for-statements">for statements</a></li>
+<li><a class="reference internal" href="#control-flow">Control flow</a><ul>
+<li><a class="reference internal" href="#if-statements">if statements</a></li>
+<li><a class="reference internal" href="#for-statements">for statements</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#function-declaration">Function declaration</a><ul>
-<li><a class="reference external" href="#anonymous-function">Anonymous function</a></li>
+<li><a class="reference internal" href="#function-declaration">Function declaration</a><ul>
+<li><a class="reference internal" href="#anonymous-function">Anonymous function</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#import-statement">Import statement</a><ul>
-<li><a class="reference external" href="#importing-a-module">Importing a module</a></li>
-<li><a class="reference external" href="#importing-a-source-file">Importing a source file</a></li>
+<li><a class="reference internal" href="#import-statement">Import statement</a><ul>
+<li><a class="reference internal" href="#importing-a-module">Importing a module</a></li>
+<li><a class="reference internal" href="#importing-a-source-file">Importing a source file</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="index.html"
-                                  title="previous chapter">Clever documentation</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="reference/index.html"
-                                  title="next chapter">Language reference</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="_sources/getting_started.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Clever documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reference/index.html"
+                        title="next chapter">Language reference</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/getting_started.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -203,12 +218,12 @@ import 'bar.clv' as bar;</pre>
         <li class="right" >
           <a href="index.html" title="Clever documentation"
              >previous</a> |</li>
-        <li><a href="index.html">Clever vv1.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2012, Clever Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2012, Clever Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
   </body>
 </html>
