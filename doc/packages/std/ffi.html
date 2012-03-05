@@ -71,6 +71,24 @@
 </pre></div>
 </div>
 <p>Where &#8220;path&#8221; is the path to shared library. The keyword <strong>extern</strong> is used to indicate that next function declarations are external functions contained on shared library &#8220;path&#8221;.</p>
+<p>After we&#8217;ve created the interface, we can use normally the functions defined. To illustrate, let&#8217;s build a shared library on Linux and call its functions using clever. Obviously, first, we need writte the C code:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">//File: hello.c</span>
+<span class="c1">//Description: A very simple C library</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="kt">void</span> <span class="n">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello Clever FFI Module!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">print</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;S=%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 
