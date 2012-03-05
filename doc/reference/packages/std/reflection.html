@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reflection &mdash; Clever v1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'v1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Clever v1.0.0 documentation" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reflection">
+<h1>Reflection<a class="headerlink" href="#reflection" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt>String <strong>get_type(Object obj)</strong>:</dt>
+<dd><p class="first last">Returns a String containing the type name of a variable.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">println</span><span class="p">(</span><span class="n">get_type</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span> <span class="c1">// Int</span>
+<span class="n">println</span><span class="p">(</span><span class="n">get_type</span><span class="p">(</span><span class="n">getcwd</span><span class="p">));</span> <span class="c1">// Function&lt;String&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reflectionpackage">
+<h3>ReflectionPackage<a class="headerlink" href="#reflectionpackage" title="Permalink to this headline">¶</a></h3>
+<p><strong>Methods</strong></p>
+<ul>
+<li><dl class="first docutils">
+<dt>String <strong>getName()</strong>:</dt>
+<dd><p class="first last">Returns a String containing the package name.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">ReflectionPackage</span> <span class="n">pkg</span><span class="p">(</span><span class="s">&quot;std&quot;</span><span class="p">);</span>
+<span class="n">println</span><span class="p">(</span><span class="n">pkg</span><span class="p">.</span><span class="n">getName</span><span class="p">(</span><span class="s">&quot;std&quot;</span><span class="p">));</span> <span class="c1">// displays &#39;std&#39;</span>
+</pre></div>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt>Array&lt;String&gt; <strong>getModules()</strong>:</dt>
+<dd><p class="first last">Returns an Array&lt;String&gt; containing the packages&#8217; module.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">ReflectionPackage</span> <span class="n">pkg</span><span class="p">(</span><span class="s">&quot;std&quot;</span><span class="p">);</span>
+<span class="n">println</span><span class="p">(</span><span class="n">pkg</span><span class="p">.</span><span class="n">getModules</span><span class="p">());</span> <span class="c1">// displays &#39;[math, io, etc]&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reflectionfunction">
+<h3>ReflectionFunction<a class="headerlink" href="#reflectionfunction" title="Permalink to this headline">¶</a></h3>
+<p><strong>Methods</strong></p>
+<ul>
+<li><dl class="first docutils">
+<dt>Bool <strong>isInternal()</strong>:</dt>
+<dd><p class="first last">Returns a Bool indicating if the function is internal.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Bool <strong>isUserDefined()</strong>:</dt>
+<dd><p class="first last">Returns a Bool indicating if the function is user-defined.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>String <strong>getReturnType()</strong>:</dt>
+<dd><p class="first last">Returns a String representing the name of return type.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">ReflectionFunction</span> <span class="n">func</span><span class="p">(</span><span class="s">&quot;getcwd&quot;</span><span class="p">);</span>
+<span class="n">println</span><span class="p">(</span><span class="n">pkg</span><span class="p">.</span><span class="n">getReturnType</span><span class="p">();</span> <span class="c1">// displays &#39;String&#39;</span>
+</pre></div>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt>Int <strong>getNumRequiredArgs()</strong>:</dt>
+<dd><p class="first last">Returns an Int representing the number of required arguments.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">ReflectionFunction</span> <span class="n">func</span><span class="p">(</span><span class="s">&quot;max&quot;</span><span class="p">);</span>
+<span class="n">println</span><span class="p">(</span><span class="n">pkg</span><span class="p">.</span><span class="n">getNumRequiredArgs</span><span class="p">();</span> <span class="c1">// displays &#39;2&#39;</span>
+</pre></div>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt>Array&lt;String&gt; <strong>getArgs()</strong>:</dt>
+<dd><p class="first last">Returns an Array&lt;String&gt; containing the type name of arguments.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.jpg" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Reflection</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#reflectionpackage">ReflectionPackage</a></li>
+<li><a class="reference internal" href="#reflectionfunction">ReflectionFunction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/reference/packages/std/reflection.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Clever Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
