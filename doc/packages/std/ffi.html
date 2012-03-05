@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>FFI &mdash; Clever vv1.0.0 documentation</title>
+    <title>FFI - Foreign Function Interface &mdash; Clever vv1.0.0 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -48,8 +48,30 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="ffi">
-<h1>FFI<a class="headerlink" href="#ffi" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="ffi-foreign-function-interface">
+<h1>FFI - Foreign Function Interface<a class="headerlink" href="#ffi-foreign-function-interface" title="Permalink to this headline">¶</a></h1>
+<p>The FFI module is the Clever interface to external functions. This module allows to use C and C++ functions contained on Shared Libraries (.dlls, .so,...) in Clever scripts. Using FFI, it&#8217;s possible easily to extend Clever using your favorite language, since many languages have C API.</p>
+<div class="section" id="a-simple-example">
+<h2>A Simple Example<a class="headerlink" href="#a-simple-example" title="Permalink to this headline">¶</a></h2>
+<p>In this section, it&#8217;s presented how to access some simple C functions using FFI module.</p>
+<p>To use a C function in a Clever script, firstly, it&#8217;s necessary write an interface like this:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">//File: hello.clvh</span>
+<span class="c1">//Description: A simple FFI example</span>
+
+<span class="n">import</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="s">&quot;path&quot;</span> <span class="p">{</span>
+        <span class="c1">//Call function function_name_1 on library &quot;path&quot;.</span>
+        <span class="n">return_type</span> <span class="n">function_name_1</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="p">...</span> <span class="p">);</span>
+
+        <span class="c1">//Call &quot;function_name_2_on_path&quot; on library &quot;path&quot; using alias function_name_2.</span>
+        <span class="n">return_type</span> <span class="n">function_name_2</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="p">...</span> <span class="p">)</span> <span class="n">as</span> <span class="s">&quot;function_name_2_on_path&quot;</span><span class="p">;</span>
+        <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Where &#8220;path&#8221; is the path to shared library. The keyword <strong>extern</strong> is used to indicate that next function declarations are external functions contained on shared library &#8220;path&#8221;.</p>
+</div>
 </div>
 
 
@@ -58,6 +80,14 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">FFI - Foreign Function Interface</a><ul>
+<li><a class="reference external" href="#a-simple-example">A Simple Example</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>Previous topic</h4>
             <p class="topless"><a href="index.html"
                                   title="previous chapter">Standard package</a></p>

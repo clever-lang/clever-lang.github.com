@@ -20,7 +20,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Clever vv1.0.0 documentation" href="index.html" />
-    <link rel="next" title="Packages" href="packages/index.html" />
+    <link rel="next" title="Language reference" href="reference/index.html" />
     <link rel="prev" title="Clever documentation" href="index.html" /> 
   </head>
   <body>
@@ -31,7 +31,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="packages/index.html" title="Packages"
+          <a href="reference/index.html" title="Language reference"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Clever documentation"
@@ -47,11 +47,16 @@
             
   <div class="section" id="getting-started">
 <h1>Getting started!<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p><strong>Clever</strong> is a general purpose statically typed, multi-paradigm
+(object-oriented, generic, imperative) programming language written in
+<em>C++</em>. It aims to have a small footprint and supply an useful set of
+features, many seen in other languages.</p>
 <div class="section" id="installing">
 <h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
-<p>To install Clever is easy, just run the make. In this stage, you can
-help the Clever Team also by running make run-tests and reporting to us
-if you get some failures!</p>
+<p>To install Clever is easy, you will need to have <em>CMake</em> installed.
+Enter in the clever source directory and run <tt class="docutils literal"><span class="pre">cmake</span> <span class="pre">.</span></tt></p>
+<p>In this stage, you can help the <em>Clever Team</em> also by running <tt class="docutils literal"><span class="pre">make</span>
+<span class="pre">run-tests</span></tt> and reporting to us if you get some failures!</p>
 </div>
 <div class="section" id="native-data-types">
 <h2>Native data types<a class="headerlink" href="#native-data-types" title="Permalink to this headline">¶</a></h2>
@@ -67,12 +72,12 @@ can do:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;hello world!&quot;</span><span class="o">.</span><span class="n">toUpper</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
 <div class="section" id="const-qualifier">
-<h2>const qualifier<a class="headerlink" href="#const-qualifier" title="Permalink to this headline">¶</a></h2>
+<h3>const qualifier<a class="headerlink" href="#const-qualifier" title="Permalink to this headline">¶</a></h3>
 <p>You can mark a variable to not be changed along your code. Just use the
 const qualifier.</p>
 <div class="highlight-python"><pre>const Int i = 10;</pre>
+</div>
 </div>
 </div>
 <div class="section" id="control-flow">
@@ -89,18 +94,38 @@ const qualifier.</p>
 }</pre>
 </div>
 </div>
-<div class="section" id="function-syntax">
-<h3>Function syntax<a class="headerlink" href="#function-syntax" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="function-declaration">
+<h2>Function declaration<a class="headerlink" href="#function-declaration" title="Permalink to this headline">¶</a></h2>
+<p>The syntax for declaring a function:</p>
 <div class="highlight-python"><pre>Int foo(Int bar) {
   return bar;
 }</pre>
 </div>
+<div class="section" id="anonymous-function">
+<h3>Anonymous function<a class="headerlink" href="#anonymous-function" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>Auto func = Void () {
+    println("hello world!");
+}
+func(); // Displays 'hello world!'</pre>
 </div>
-<div class="section" id="importing-module">
-<h3>Importing module<a class="headerlink" href="#importing-module" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="import-statement">
+<h2>Import statement<a class="headerlink" href="#import-statement" title="Permalink to this headline">¶</a></h2>
+<p>Currently there are two way to use the import statement, and for both
+we can use an alias to refer to its content. See below:</p>
+<div class="section" id="importing-a-module">
+<h3>Importing a module<a class="headerlink" href="#importing-a-module" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">std.io</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">std.regex</span> <span class="kn">as</span> <span class="nn">re</span><span class="p">;</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="importing-a-source-file">
+<h3>Importing a source file<a class="headerlink" href="#importing-a-source-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>import 'foo.clv';
+import 'bar.clv' as bar;</pre>
 </div>
 </div>
 </div>
@@ -116,13 +141,22 @@ const qualifier.</p>
             <ul>
 <li><a class="reference external" href="#">Getting started!</a><ul>
 <li><a class="reference external" href="#installing">Installing</a></li>
-<li><a class="reference external" href="#native-data-types">Native data types</a></li>
+<li><a class="reference external" href="#native-data-types">Native data types</a><ul>
 <li><a class="reference external" href="#const-qualifier">const qualifier</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#control-flow">Control flow</a><ul>
 <li><a class="reference external" href="#if-statements">if statements</a></li>
 <li><a class="reference external" href="#for-statements">for statements</a></li>
-<li><a class="reference external" href="#function-syntax">Function syntax</a></li>
-<li><a class="reference external" href="#importing-module">Importing module</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#function-declaration">Function declaration</a><ul>
+<li><a class="reference external" href="#anonymous-function">Anonymous function</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#import-statement">Import statement</a><ul>
+<li><a class="reference external" href="#importing-a-module">Importing a module</a></li>
+<li><a class="reference external" href="#importing-a-source-file">Importing a source file</a></li>
 </ul>
 </li>
 </ul>
@@ -133,8 +167,8 @@ const qualifier.</p>
             <p class="topless"><a href="index.html"
                                   title="previous chapter">Clever documentation</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="packages/index.html"
-                                  title="next chapter">Packages</a></p>
+            <p class="topless"><a href="reference/index.html"
+                                  title="next chapter">Language reference</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
               <li><a href="_sources/getting_started.txt"
@@ -164,7 +198,7 @@ const qualifier.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="packages/index.html" title="Packages"
+          <a href="reference/index.html" title="Language reference"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Clever documentation"
