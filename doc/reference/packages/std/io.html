@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Standard package &mdash; Clever v1.0.0 documentation</title>
+    <title>I/O - Input/Output operation &mdash; Clever v1.0.0 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <link rel="top" title="Clever v1.0.0 documentation" href="../../../index.html" />
-    <link rel="up" title="Packages" href="../../packages/index.html" />
-    <link rel="next" title="File" href="../std/file.html" />
-    <link rel="prev" title="Packages" href="../../packages/index.html" /> 
+    <link rel="up" title="Standard package" href="../std/index.html" />
+    <link rel="next" title="Math" href="../std/math.html" />
+    <link rel="prev" title="FFI - Foreign Function Interface" href="../std/ffi.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,13 +38,14 @@
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../std/file.html" title="File"
+          <a href="../std/math.html" title="Math"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../../packages/index.html" title="Packages"
+          <a href="../std/ffi.html" title="FFI - Foreign Function Interface"
              accesskey="P">previous</a> |</li>
         <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
-          <li><a href="../../packages/index.html" accesskey="U">Packages</a> &raquo;</li> 
+          <li><a href="../../packages/index.html" >Packages</a> &raquo;</li>
+          <li><a href="../std/index.html" accesskey="U">Standard package</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,36 +54,36 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="standard-package">
-<h1>Standard package<a class="headerlink" href="#standard-package" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="section" id="i-o-input-output-operation">
+<h1>I/O - Input/Output operation<a class="headerlink" href="#i-o-input-output-operation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../std/file.html">File</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../std/ffi.html">FFI - Foreign Function Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../std/ffi.html#a-simple-example">A Simple Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../std/ffi.html#the-ffiobject">The FFIObject</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../std/io.html">I/O - Input/Output operation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../std/io.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../std/math.html">Math</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../std/math.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../std/net.html">Net</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../std/reflection.html">Reflection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../std/reflection.html#functions">Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../std/reflection.html#classes">Classes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../std/reflection.html#reflectionpackage">ReflectionPackage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../std/reflection.html#reflectionfunction">ReflectionFunction</a></li>
-</ul>
+<li><dl class="first docutils">
+<dt>Void <strong>println([...])</strong>:</dt>
+<dd><p class="first last">Prints the value of arguments supplied after calling its respective toString()
+methods (it includes an implict newline terminator).</p>
+</dd>
+</dl>
 </li>
 </ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="p">;</span>
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello!&quot;</span><span class="p">);</span> <span class="c1">// Displays &#39;Hello!&#39; with a \n terminator</span>
+</pre></div>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt>Void <strong>print([...])</strong>:</dt>
+<dd><p class="first last">Prints the value of arguments supplied after calling its respective toString()
+methods.</p>
+</dd>
+</dl>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../std/sys.html">System specific</a></li>
 </ul>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="p">;</span>
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello!&quot;</span><span class="p">);</span> <span class="c1">// Displays &#39;Hello!&#39; without a \n terminator</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -95,15 +96,23 @@
             <p class="logo"><a href="../../../index.html">
               <img class="logo" src="../../../_static/logo.jpg" alt="Logo"/>
             </a></p>
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">I/O - Input/Output operation</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../../packages/index.html"
-                        title="previous chapter">Packages</a></p>
+  <p class="topless"><a href="../std/ffi.html"
+                        title="previous chapter">FFI - Foreign Function Interface</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../std/file.html"
-                        title="next chapter">File</a></p>
+  <p class="topless"><a href="../std/math.html"
+                        title="next chapter">Math</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../../_sources/reference/packages/std/index.txt"
+    <li><a href="../../../_sources/reference/packages/std/io.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -130,13 +139,14 @@
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../std/file.html" title="File"
+          <a href="../std/math.html" title="Math"
              >next</a> |</li>
         <li class="right" >
-          <a href="../../packages/index.html" title="Packages"
+          <a href="../std/ffi.html" title="FFI - Foreign Function Interface"
              >previous</a> |</li>
         <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
-          <li><a href="../../packages/index.html" >Packages</a> &raquo;</li> 
+          <li><a href="../../packages/index.html" >Packages</a> &raquo;</li>
+          <li><a href="../std/index.html" >Standard package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
