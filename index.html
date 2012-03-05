@@ -1,7 +1,18 @@
----
-layout: base
-title: Home
----
+<html>
+<head>
+ <title>Clever programming language</title>
+ <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+ <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+ <h1>Clever<img src="logo.jpg"/></h1>
+ <h3>programming language</h3>
+ <blockquote class="gray">
+  <strong>Clever</strong> is a general purpose statically typed, multi-paradigm (object-oriented, generic, imperative)<br/>
+  programming language written in C++. It aims to have a small footprint and supply<br/>
+  an useful set of features, many seen in other languages.
+ </blockquote>
+
  <div id="fb-root"></div>
  <script>
 	(function(d, s, id) {
@@ -13,7 +24,11 @@ title: Home
 	}(document, 'script', 'facebook-jssdk'));
  </script>
 
- {% include nav.html %}
+ <div id="links">
+   <ul>
+    <li><a href="doc/">Documentation</a></li>
+   </ul>
+ </div>
 
  <div id="code">
   <pre><strong>import std.io as io;</strong>
@@ -30,3 +45,6 @@ title: Home
 
  <div class="fb-like-box" data-href="https://www.facebook.com/pages/Clever-Programming-Language/273749636014241" data-width="292" data-height="80" data-colorscheme="dark" data-show-faces="false" data-border-color="#bbbbbb" data-stream="false" data-header="false"></div>
 
+ <div id="footer">Clever programming language - 2012</div>
+</body>
+</html>
