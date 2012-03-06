@@ -66,11 +66,13 @@ Enter in the clever source directory and run <tt class="docutils literal"><span 
 <span class="n">Bool</span> <span class="n">is</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 <span class="n">Array</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">;</span>
 <span class="n">Map</span><span class="o">&lt;</span><span class="n">Int</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">;</span>
+<span class="n">Pair</span><span class="o">&lt;</span><span class="n">Int</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span>
+<span class="n">Function</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="n">f</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Native data types in Clever are first-class object. This means that you
 can do:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="s">&quot;hello world!&quot;</span><span class="p">.</span><span class="n">toUpper</span><span class="p">()</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="s">&quot;hello world!&quot;</span><span class="p">.</span><span class="n">toUpper</span><span class="p">();</span> <span class="c1">// Returns &#39;HELLO WORLD!&#39;</span>
 </pre></div>
 </div>
 <div class="section" id="const-qualifier">
@@ -110,7 +112,7 @@ const qualifier.</p>
 <div class="section" id="anonymous-function">
 <h3>Anonymous function<a class="headerlink" href="#anonymous-function" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-cpp"><div class="highlight"><pre><span class="n">Auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Void</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="n">println</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">);</span>
+    <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="n">func</span><span class="p">();</span> <span class="c1">// Displays &#39;hello world!&#39;</span>
 </pre></div>
