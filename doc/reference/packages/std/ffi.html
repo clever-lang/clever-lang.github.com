@@ -25,7 +25,10 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Clever v1.0.0 documentation" href="../../../index.html" /> 
+    <link rel="top" title="Clever v1.0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Standard package" href="../std/index.html" />
+    <link rel="next" title="I/O - Input/Output operation" href="../std/io.html" />
+    <link rel="prev" title="File" href="../std/file.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,7 +37,15 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="../std/io.html" title="I/O - Input/Output operation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../std/file.html" title="File"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="../../packages/index.html" >Packages</a> &raquo;</li>
+          <li><a href="../std/index.html" accesskey="U">Standard package</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -46,15 +57,18 @@
   <div class="section" id="ffi-foreign-function-interface">
 <h1>FFI - Foreign Function Interface<a class="headerlink" href="#ffi-foreign-function-interface" title="Permalink to this headline">¶</a></h1>
 <p>The FFI module is the Clever interface to external functions. This module
-allows to use C and C++ functions contained on Shared Libraries (.dlls,
-.so,...) in Clever scripts. Using FFI, it&#8217;s possible easily to extend
-Clever using your favorite language, since many languages have C API.</p>
+is a wrapper around the libffi library, which provides means to use C
+and C and C++ functions contained on dynamically linked libraries (.dll on
+Windows, .so on Linux).</p>
+<p>Using FFI, one can easily extend Clever without the need for recompilation.
+You could even load libraries written in other languages, as long as it&#8217;s
+available as a shared object (so) or dynamically linked library (dll).</p>
 <div class="section" id="a-simple-example">
 <h2>A Simple Example<a class="headerlink" href="#a-simple-example" title="Permalink to this headline">¶</a></h2>
 <p>In this section, it&#8217;s presented how to access some simple C functions
-using FFI module.</p>
-<p>To use a C function in a Clever script, firstly, it&#8217;s necessary write
-an interface like this:</p>
+using the FFI module.</p>
+<p>The first step is to describe the library&#8217;s interface. You can do this using
+an <cite>extern</cite> block like this:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">;</span>
 
 <span class="k">extern</span> <span class="s">&quot;path&quot;</span> <span class="p">{</span>
@@ -82,7 +96,7 @@ to indicate that next function declarations are external functions contained
 on shared library &#8220;path&#8221;.</p>
 <p>After we&#8217;ve created the interface, we can use normally the functions defined.
 To illustrate, let&#8217;s build a shared library on Linux and call its functions
-using clever. Obviously, first, we need write the C code:</p>
+using Clever. Obviously, first, we need write the C code:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span class="cp">//File: hello.c</span>
 <span class="cp">//Description: A very simple C library</span>
 <span class="cp">#include &lt;stdio.h&gt;</span>
@@ -137,11 +151,12 @@ names like &#8220;_sub&#8221; on last example.</p>
 </div>
 <div class="section" id="the-ffiobject">
 <h2>The FFIObject<a class="headerlink" href="#the-ffiobject" title="Permalink to this headline">¶</a></h2>
-<p>Sometimes, we need to save data of an object definied in a shared library, as Clever can&#8217;t
-manipulate it  directly, so it&#8217;s necessary a passive data strucuture to act like a
-intermediate. FFIObject is this intermediate (like a C++ reference, per example).</p>
-<p>The FFIObject is a special type, because its function is only save a pointer to data
-structures created in a shared library. It&#8217;s a <strong>passive</strong> structure.</p>
+<p>Sometimes, we use a library that manipulates some kind of class/struct.
+Unfortunatelly, Clever doesn&#8217;t provide external class/struct mapping, but it
+does provide a workaround for these cases: the <cite>FFIObject</cite>.</p>
+<p>The <cite>FFIObject</cite> is a passive intermediate data structure that serves as a
+representation of the library&#8217;s data structures or just as placeholder to
+pointers and C++ references.</p>
 <p>Using the type alias, we can build ADT (Abstract Data Type) like:</p>
 <div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">;</span>
 
@@ -185,6 +200,12 @@ structures created in a shared library. It&#8217;s a <strong>passive</strong> st
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../std/file.html"
+                        title="previous chapter">File</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../std/io.html"
+                        title="next chapter">I/O - Input/Output operation</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../../_sources/reference/packages/std/ffi.txt"
@@ -213,7 +234,15 @@ structures created in a shared library. It&#8217;s a <strong>passive</strong> st
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="../std/io.html" title="I/O - Input/Output operation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../std/file.html" title="File"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="../../packages/index.html" >Packages</a> &raquo;</li>
+          <li><a href="../std/index.html" >Standard package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
