@@ -1,27 +1,33 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Core Development &mdash; Clever vv1.0.0 documentation</title>
+    <title>Core Development &mdash; Clever v1.0.0 documentation</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     'v1.0.0',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Clever vv1.0.0 documentation" href="index.html" />
+    <link rel="top" title="Clever v1.0.0 documentation" href="index.html" />
     <link rel="next" title="Clever C++ API" href="api/index.html" />
-    <link rel="prev" title="Session" href="reference/packages/web/session.html" /> 
+    <link rel="prev" title="Reflection" href="packages/std/reflection.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,9 +40,9 @@
           <a href="api/index.html" title="Clever C++ API"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="reference/packages/web/session.html" title="Session"
+          <a href="packages/std/reflection.html" title="Reflection"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Clever vv1.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,11 +60,11 @@
 enough.
 The <em>LLVM</em> [2] one is also quite nice.</p>
 <blockquote class="epigraph">
-Use the .cc extension for C++ source files and .h for C++ headers,
+<div>Use the .cc extension for C++ source files and .h for C++ headers,
 hopefully your compiler is smart enough to identify C++ source inside
 a .h (don&#8217;t worry, GCC and Clang are!). Oh, I almost forgot, please
 use tabs instead of spaces, UTF-8 file encoding and UNIX file endings
-(Line feed a.k.a. n).</blockquote>
+(Line feed a.k.a. n).</div></blockquote>
 <p>If you don&#8217;t know how to contribute, but know how to code, it&#8217;d be nice if you
 could implement one of the ideas from our whishlist:
 <a class="reference external" href="https://github.com/clever-lang/clever/wiki/TODO-List-&amp;-Ideas">TODO List &amp; Ideas</a></p>
@@ -77,38 +83,38 @@ could implement one of the ideas from our whishlist:
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.jpg" alt="Logo"/>
             </a></p>
-            <h3><a href="index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Core Development</a><ul>
-<li><a class="reference external" href="#coding-standards">Coding standards</a></li>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Core Development</a><ul>
+<li><a class="reference internal" href="#coding-standards">Coding standards</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="reference/packages/web/session.html"
-                                  title="previous chapter">Session</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="api/index.html"
-                                  title="next chapter">Clever C++ API</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="_sources/core.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="packages/std/reflection.html"
+                        title="previous chapter">Reflection</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api/index.html"
+                        title="next chapter">Clever C++ API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/core.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -123,14 +129,14 @@ could implement one of the ideas from our whishlist:
           <a href="api/index.html" title="Clever C++ API"
              >next</a> |</li>
         <li class="right" >
-          <a href="reference/packages/web/session.html" title="Session"
+          <a href="packages/std/reflection.html" title="Reflection"
              >previous</a> |</li>
-        <li><a href="index.html">Clever vv1.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2012, Clever Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2012, Clever Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
   </body>
 </html>

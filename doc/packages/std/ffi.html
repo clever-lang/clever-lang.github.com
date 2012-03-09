@@ -1,28 +1,34 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>FFI - Foreign Function Interface &mdash; Clever vv1.0.0 documentation</title>
+    <title>FFI - Foreign Function Interface &mdash; Clever v1.0.0 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
         VERSION:     'v1.0.0',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Clever vv1.0.0 documentation" href="../../index.html" />
-    <link rel="up" title="Standard package" href="index.html" />
-    <link rel="next" title="Reflection" href="reflection.html" />
-    <link rel="prev" title="Standard package" href="index.html" /> 
+    <link rel="top" title="Clever v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Standard package" href="../std/index.html" />
+    <link rel="next" title="Reflection" href="../std/reflection.html" />
+    <link rel="prev" title="Standard package" href="../std/index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -32,14 +38,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="reflection.html" title="Reflection"
+          <a href="../std/reflection.html" title="Reflection"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Standard package"
+          <a href="../std/index.html" title="Standard package"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Clever vv1.0.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Packages</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Standard package</a> &raquo;</li> 
+          <li><a href="../std/index.html" accesskey="U">Standard package</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -88,8 +94,8 @@ on shared library &#8220;path&#8221;.</p>
 <p>After we&#8217;ve created the interface, we can use normally the functions defined.
 To illustrate, let&#8217;s build a shared library on Linux and call its functions
 using clever. Obviously, first, we need write the C code:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="c1">//File: hello.c</span>
-<span class="c1">//Description: A very simple C library</span>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">//File: hello.c</span>
+<span class="cp">//Description: A very simple C library</span>
 <span class="cp">#include &lt;stdio.h&gt;</span>
 
 <span class="kt">void</span> <span class="n">hello</span><span class="p">()</span> <span class="p">{</span>
@@ -137,11 +143,38 @@ its functions in Clever using:</p>
 <span class="n">println</span><span class="p">(</span><span class="s">&quot; 10&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot; 7&quot;</span><span class="p">,</span> <span class="s">&quot;___&quot;</span><span class="p">,</span> <span class="s">&quot;  &quot;</span> <span class="o">+</span> <span class="n">sub</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">).</span><span class="n">toString</span><span class="p">());</span>
 </pre></div>
 </div>
-<p>The alias is an important thing because allow we access in Clever, functions with forbidden
+<p>The alias is an important thing because allow we access in Clever functions with forbidden
 names like &#8220;_sub&#8221; on last example.</p>
 </div>
 <div class="section" id="the-ffiobject">
 <h2>The FFIObject<a class="headerlink" href="#the-ffiobject" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, we need to save data of an object definied in a shared library, as Clever can&#8217;t
+manipulate it  directly, so it&#8217;s necessary a passive data strucuture to act like a
+intermediate. FFIObject is this intermediate (like a C++ reference, per example).</p>
+<p>The FFIObject is a special type, because its function is only save a pointer to data
+structures created in a shared library. It&#8217;s a <strong>passive</strong> structure.</p>
+<p>Using the type alias, we can build ADT (Abstract Data Type) like:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">use</span> <span class="n">BigInt</span> <span class="n">as</span> <span class="n">std</span><span class="p">.</span><span class="n">ffi</span><span class="o">::</span><span class="n">FFIObject</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And, using the alias previously definied, we can build a simple interface to libgmp:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">use</span> <span class="n">BigInt</span> <span class="n">as</span> <span class="n">std</span><span class="p">.</span><span class="n">ffi</span><span class="o">::</span><span class="n">FFIObject</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="s">&quot;./gmp_cpp&quot;</span> <span class="p">{</span>
+        <span class="n">BigInt</span> <span class="n">init_bi</span><span class="p">();</span>
+        <span class="n">BigInt</span> <span class="n">add_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">res</span><span class="p">,</span> <span class="n">BigInt</span> <span class="n">a</span><span class="p">,</span> <span class="n">BigInt</span> <span class="n">b</span><span class="p">);</span>
+        <span class="n">Void</span> <span class="n">set_str_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">op</span><span class="p">,</span> <span class="n">String</span> <span class="n">str</span><span class="p">,</span> <span class="n">Int</span> <span class="n">base</span><span class="p">);</span>
+        <span class="n">Void</span> <span class="n">set_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">op1</span><span class="p">,</span> <span class="n">BigInt</span> <span class="n">op2</span><span class="p">);</span>
+        <span class="n">Void</span> <span class="n">clear_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">x</span><span class="p">);</span>
+
+        <span class="n">String</span> <span class="n">get_str_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">op</span><span class="p">,</span> <span class="n">Int</span> <span class="n">base</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -154,39 +187,39 @@ names like &#8220;_sub&#8221; on last example.</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/logo.jpg" alt="Logo"/>
             </a></p>
-            <h3><a href="../../index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">FFI - Foreign Function Interface</a><ul>
-<li><a class="reference external" href="#a-simple-example">A Simple Example</a></li>
-<li><a class="reference external" href="#the-ffiobject">The FFIObject</a></li>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">FFI - Foreign Function Interface</a><ul>
+<li><a class="reference internal" href="#a-simple-example">A Simple Example</a></li>
+<li><a class="reference internal" href="#the-ffiobject">The FFIObject</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="index.html"
-                                  title="previous chapter">Standard package</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="reflection.html"
-                                  title="next chapter">Reflection</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="../../_sources/packages/std/ffi.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="../../search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../std/index.html"
+                        title="previous chapter">Standard package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../std/reflection.html"
+                        title="next chapter">Reflection</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/packages/std/ffi.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -198,19 +231,19 @@ names like &#8220;_sub&#8221; on last example.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="reflection.html" title="Reflection"
+          <a href="../std/reflection.html" title="Reflection"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Standard package"
+          <a href="../std/index.html" title="Standard package"
              >previous</a> |</li>
-        <li><a href="../../index.html">Clever vv1.0.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Packages</a> &raquo;</li>
-          <li><a href="index.html" >Standard package</a> &raquo;</li> 
+          <li><a href="../std/index.html" >Standard package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2012, Clever Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2012, Clever Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
     </div>
   </body>
 </html>
