@@ -64,85 +64,6 @@ Enter in the clever source directory and run <tt class="docutils literal"><span 
 <p>In this stage, you can help the <em>Clever Team</em> also by running <tt class="docutils literal"><span class="pre">make</span>
 <span class="pre">run-tests</span></tt> and reporting to us if you get some failures!</p>
 </div>
-<div class="section" id="native-data-types">
-<h2>Native data types<a class="headerlink" href="#native-data-types" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="n">Int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="n">Double</span> <span class="n">j</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
-<span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;foo&quot;</span><span class="p">;</span>
-<span class="n">Bool</span> <span class="n">is</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-<span class="n">Array</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">;</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">Int</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span><span class="p">;</span>
-<span class="n">Pair</span><span class="o">&lt;</span><span class="n">Int</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">;</span>
-<span class="n">Function</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">&gt;</span> <span class="n">f</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>Native data types in Clever are first-class object. This means that you
-can do:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="s">&quot;hello world!&quot;</span><span class="p">.</span><span class="n">toUpper</span><span class="p">();</span> <span class="c1">// Returns &#39;HELLO WORLD!&#39;</span>
-</pre></div>
-</div>
-<div class="section" id="const-qualifier">
-<h3>const qualifier<a class="headerlink" href="#const-qualifier" title="Permalink to this headline">¶</a></h3>
-<p>You can mark a variable to not be changed along your code. Just use the
-const qualifier.</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="k">const</span> <span class="n">Int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="control-flow">
-<h2>Control flow<a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="if-statements">
-<h3>if statements<a class="headerlink" href="#if-statements" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">bar</span><span class="p">())</span> <span class="p">{</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="for-statements">
-<h3>for statements<a class="headerlink" href="#for-statements" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="n">Int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="function-declaration">
-<h2>Function declaration<a class="headerlink" href="#function-declaration" title="Permalink to this headline">¶</a></h2>
-<p>The syntax for declaring a function:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="n">Int</span> <span class="n">foo</span><span class="p">(</span><span class="n">Int</span> <span class="n">bar</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="n">bar</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="section" id="anonymous-function">
-<h3>Anonymous function<a class="headerlink" href="#anonymous-function" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="n">Auto</span> <span class="n">func</span> <span class="o">=</span> <span class="n">Void</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="o">::</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="n">func</span><span class="p">();</span> <span class="c1">// Displays &#39;hello world!&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="import-statement">
-<h2>Import statement<a class="headerlink" href="#import-statement" title="Permalink to this headline">¶</a></h2>
-<p>Currently there are two way to use the import statement, and for both
-we can use an alias to refer to its content. See below:</p>
-<div class="section" id="importing-a-module">
-<h3>Importing a module<a class="headerlink" href="#importing-a-module" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
-<span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">regex</span><span class="p">.</span><span class="o">*</span> <span class="n">as</span> <span class="n">re</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="importing-a-source-file">
-<h3>Importing a source file<a class="headerlink" href="#importing-a-source-file" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cpp"><pre>import 'foo.clv';
-import 'bar.clv' as bar;</pre>
-</div>
-</div>
-</div>
 </div>
 
 
@@ -158,24 +79,6 @@ import 'bar.clv' as bar;</pre>
   <ul>
 <li><a class="reference internal" href="#">Getting started!</a><ul>
 <li><a class="reference internal" href="#installing">Installing</a></li>
-<li><a class="reference internal" href="#native-data-types">Native data types</a><ul>
-<li><a class="reference internal" href="#const-qualifier">const qualifier</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#control-flow">Control flow</a><ul>
-<li><a class="reference internal" href="#if-statements">if statements</a></li>
-<li><a class="reference internal" href="#for-statements">for statements</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#function-declaration">Function declaration</a><ul>
-<li><a class="reference internal" href="#anonymous-function">Anonymous function</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#import-statement">Import statement</a><ul>
-<li><a class="reference internal" href="#importing-a-module">Importing a module</a></li>
-<li><a class="reference internal" href="#importing-a-source-file">Importing a source file</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -225,7 +128,7 @@ import 'bar.clv' as bar;</pre>
     </div>
     <div class="footer">
         &copy; Copyright 2012, Clever Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
