@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Internals &mdash; Clever v1.0.0 documentation</title>
+    <title>Clever grammar &mdash; Clever v1.0.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,9 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Clever v1.0.0 documentation" href="../index.html" />
-    <link rel="next" title="Clever grammar" href="grammar.html" />
-    <link rel="prev" title="Getting involved!" href="../getting_involved.html" /> 
+    <link rel="up" title="Internals" href="index.html" />
+    <link rel="next" title="Clever C++ API" href="api/index.html" />
+    <link rel="prev" title="Internals" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -36,12 +37,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="grammar.html" title="Clever grammar"
+          <a href="api/index.html" title="Clever C++ API"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../getting_involved.html" title="Getting involved!"
+          <a href="index.html" title="Internals"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Internals</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,20 +52,39 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="internals">
-<h1>Internals<a class="headerlink" href="#internals" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="grammar.html">Clever grammar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/index.html">Clever C++ API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/package.html">Creating a new package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/module.html">Creating a new module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="vm/index.html">Clever VM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="typesystem/index.html">Type System</a></li>
-</ul>
+  <div class="section" id="clever-grammar">
+<h1>Clever grammar<a class="headerlink" href="#clever-grammar" title="Permalink to this headline">¶</a></h1>
+<p>Clever uses Bison <a class="footnote-reference" href="#f1" id="id1">[1]</a> and re2c <a class="footnote-reference" href="#f2" id="id2">[2]</a> tools to generate your parser and lexer.</p>
+<p>Our grammar is described as follows below:</p>
+<div class="highlight-python"><pre>top_statements:
+                statement_list
+;
+
+statement_list:
+                /* empty */
+        |       non_empty_statement_list
+;
+
+non_empty_statement_list:
+                var_declaration &#x27;;&#x27;
+;
+
+var_declaration:
+                VAR IDENT
+;</pre>
 </div>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://www.gnu.org/software/bison/">http://www.gnu.org/software/bison/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="http://re2c.org/">http://re2c.org/</a></td></tr>
+</tbody>
+</table>
 </div>
 
 
@@ -76,14 +97,14 @@
               <img class="logo" src="../_static/logo.jpg" alt="Logo"/>
             </a></p>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../getting_involved.html"
-                        title="previous chapter">Getting involved!</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Internals</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="grammar.html"
-                        title="next chapter">Clever grammar</a></p>
+  <p class="topless"><a href="api/index.html"
+                        title="next chapter">Clever C++ API</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/internals/index.txt"
+    <li><a href="../_sources/internals/grammar.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -110,12 +131,13 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="grammar.html" title="Clever grammar"
+          <a href="api/index.html" title="Clever C++ API"
              >next</a> |</li>
         <li class="right" >
-          <a href="../getting_involved.html" title="Getting involved!"
+          <a href="index.html" title="Internals"
              >previous</a> |</li>
-        <li><a href="../index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Internals</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
