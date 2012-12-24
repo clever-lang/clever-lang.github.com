@@ -122,6 +122,32 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="scope-rules">
+<h2>Scope rules<a class="headerlink" href="#scope-rules" title="Permalink to this headline">¶</a></h2>
+<p>Clever uses lexical scoping.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="o">++</span><span class="nx">foo</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">println</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 1</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Global scope</li>
+</ul>
+<p>To access a variable declared outside a function declaration, you will need to
+use the <cite>global</cite> keyword.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">global</span> <span class="nx">foo</span><span class="p">;</span>
+
+        <span class="o">++</span><span class="nx">foo</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="native-data-types">
 <h2>Native Data Types<a class="headerlink" href="#native-data-types" title="Permalink to this headline">¶</a></h2>
 <p>Examples of construction of native data types in Clever. For full reference (methods, properties, etc) please refer to: // TODO(muriloadriano): url here</p>
@@ -143,7 +169,7 @@
 <ul class="simple">
 <li>Boolean</li>
 </ul>
-<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="kr">boolean</span> <span class="o">=</span> <span class="p">(</span><span class="kc">true</span> <span class="o">||</span> <span class="kc">false</span><span class="p">);</span>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">bool</span> <span class="o">=</span> <span class="p">(</span><span class="kc">true</span> <span class="o">||</span> <span class="kc">false</span><span class="p">);</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -183,8 +209,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="flow-control">
-<h2>Flow Control<a class="headerlink" href="#flow-control" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="control-flow">
+<h2>Control Flow<a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>If statements</li>
 </ul>
@@ -233,8 +259,9 @@
 <li><a class="reference internal" href="#comments">Comments</a></li>
 <li><a class="reference internal" href="#variables">Variables</a></li>
 <li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#scope-rules">Scope rules</a></li>
 <li><a class="reference internal" href="#native-data-types">Native Data Types</a></li>
-<li><a class="reference internal" href="#flow-control">Flow Control</a></li>
+<li><a class="reference internal" href="#control-flow">Control Flow</a></li>
 </ul>
 </li>
 </ul>
