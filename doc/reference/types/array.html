@@ -55,6 +55,58 @@
             
   <div class="section" id="array">
 <h1>Array<a class="headerlink" href="#array" title="Permalink to this headline">¶</a></h1>
+<p><strong>Methods</strong></p>
+<ul>
+<li><dl class="first docutils">
+<dt>void append(arg [, ...])</dt>
+<dd><p class="first last">Adds new entrie(s) to the array.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">];</span>
+<span class="nx">arr</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="nx">println</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span> <span class="c1">// [1, 2, 3]</span>
+</pre></div>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt>void each(Function callback):</dt>
+<dd><p class="first last">Executes a supplied function on each array element.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+<span class="nx">arr</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="nx">println</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="p">});</span>
+</pre></div>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt>mixed at(Int position):</dt>
+<dd><p class="first last">Returns the specified element in the array if it exists.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+
+<span class="nx">println</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">at</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span> <span class="c1">// 3</span>
+</pre></div>
+</div>
+<ul>
+<li><dl class="first docutils">
+<dt>Int size():</dt>
+<dd><p class="first last">Returns the array size.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">println</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">size</span><span class="p">());</span> <span class="c1">// 3</span>
+</pre></div>
+</div>
 </div>
 
 
