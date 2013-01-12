@@ -142,6 +142,15 @@ You can see the Clever parser grammar on <a class="reference internal" href="../
 <span class="nx">println</span><span class="p">(</span><span class="nx">abc</span><span class="p">()());</span> <span class="c1">// 3</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li>Variadic functions</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">show</span><span class="p">(</span><span class="nx">args</span><span class="p">...)</span> <span class="p">{</span>
+        <span class="nx">args</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">println</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">show</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;foobar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="scope-rules">
 <h2>Scope rules<a class="headerlink" href="#scope-rules" title="Permalink to this headline">¶</a></h2>
