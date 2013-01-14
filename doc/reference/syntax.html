@@ -271,6 +271,42 @@ use the <cite>global</cite> keyword.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li>Spawn statement creates a new thread or a thread vector.</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">spawn</span> <span class="nx">thread_name</span> <span class="p">{</span>
+        <span class="p">...</span> <span class="c1">// statements block.</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="p">...</span> <span class="c1">// do something.</span>
+        <span class="p">}</span>
+
+        <span class="nx">foo</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// or...</span>
+
+<span class="nx">spawn</span> <span class="nx">thread_name</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">{</span> <span class="c1">// create two threads.</span>
+        <span class="p">...</span> <span class="c1">// do something.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Wait statement is used to waiting a thread or a thread vector finish.</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">wait</span> <span class="nx">thread_name</span><span class="p">;</span> <span class="c1">// wait threads called &quot;thread_name&quot;.</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Critical statement defines a critical section in the thread.</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">spawn</span> <span class="nx">t</span> <span class="p">{</span>
+        <span class="nx">critical</span> <span class="p">{</span>
+                <span class="nx">doSomeCriticalOperation</span><span class="p">();</span> <span class="c1">// here, you can read a file or a standard stream.</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="errors-and-exceptions">
 <h2>Errors and Exceptions<a class="headerlink" href="#errors-and-exceptions" title="Permalink to this headline">¶</a></h2>
