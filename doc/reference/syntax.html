@@ -151,6 +151,21 @@ You can see the Clever parser grammar on <a class="reference internal" href="../
 <span class="nx">show</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;foobar&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li>Closure</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">321</span><span class="p">);</span>
+
+<span class="nx">print</span><span class="p">(</span><span class="nx">a</span><span class="p">(),</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="nx">b</span><span class="p">());</span> <span class="c1">// 123-321</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="scope-rules">
 <h2>Scope rules<a class="headerlink" href="#scope-rules" title="Permalink to this headline">¶</a></h2>
@@ -163,22 +178,10 @@ You can see the Clever parser grammar on <a class="reference internal" href="../
 <span class="nx">println</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 1</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li>Global scope</li>
-</ul>
-<p>To access a variable declared outside a function declaration, you will need to
-use the <cite>global</cite> keyword.</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
-        <span class="o">++</span><span class="nx">foo</span><span class="p">;</span> <span class="c1">// changes the variable from outer scope</span>
-<span class="p">}</span>
-</pre></div>
-</div>
 </div>
 <div class="section" id="native-data-types">
 <h2>Native Data Types<a class="headerlink" href="#native-data-types" title="Permalink to this headline">¶</a></h2>
-<p>Examples of construction of native data types in Clever. For full reference (methods, properties, etc) please refer to: // TODO(muriloadriano): url here</p>
+<p>Examples of construction of native data types in Clever. For full reference (methods, properties, etc) please refer to: <a class="reference external" href="http://clever-lang.github.com/doc/reference/types/index.html">Types</a></p>
 <ul class="simple">
 <li>String</li>
 </ul>
@@ -223,6 +226,7 @@ use the <cite>global</cite> keyword.</p>
 <li>Map</li>
 </ul>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39;Clever&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">empty</span> <span class="o">=</span> <span class="p">{</span> <span class="o">:</span> <span class="p">};</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -238,17 +242,52 @@ use the <cite>global</cite> keyword.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="user-type">
+<h2>User type<a class="headerlink" href="#user-type" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Creating a new type</li>
+</ul>
+<p>The name rule for type creationg is: the name must start with an upper case letter.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">a</span><span class="p">;</span>
+
+        <span class="kd">function</span> <span class="nx">setA</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="nx">v</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="kd">function</span> <span class="nx">getA</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Property access</li>
+</ul>
+<p>As seen below, access to properties are done by using the <cite>this</cite> variable.</p>
+<ul class="simple">
+<li>Class constructor</li>
+</ul>
+<p>To declare a constructor you need to declare a function using the same name
+than the type itself. See below:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{</span>
+        <span class="kd">function</span> <span class="nx">Foo</span><span class="p">()</span> <span class="p">{</span>
+                <span class="c1">// Constructor</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="control-flow">
 <h2>Control Flow<a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h2>
+<p>On condition, just the literal boolean <cite>false</cite> and <cite>null</cite> are evaluated to false
+value. Everything else is a true value. This means the integer zero is evaluated
+to true.</p>
 <ul class="simple">
 <li>If statements</li>
 </ul>
-<div class="highlight-javascript"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">foo</span><span class="p">();</span>
-<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">y</span> <span class="o">+</span> <span class="nx">z</span> <span class="o">&lt;</span> <span class="nx">w</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">bar</span><span class="p">();</span>
-<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="nx">baz</span><span class="p">();</span>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// okay, 0 is true!</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -310,10 +349,19 @@ use the <cite>global</cite> keyword.</p>
 </div>
 <div class="section" id="errors-and-exceptions">
 <h2>Errors and Exceptions<a class="headerlink" href="#errors-and-exceptions" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Syntax error</li>
-<li>Runtime error</li>
-<li>Throwing exception</li>
+<ul>
+<li><p class="first">Syntax error</p>
+<blockquote>
+<div><p>On syntax error, the compilation is aborted.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Runtime error</p>
+<blockquote>
+<div><p>Some internal methods can throw exceptions.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Throwing exception</p>
+</li>
 </ul>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="k">try</span> <span class="p">{</span>
         <span class="k">throw</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>
@@ -342,6 +390,7 @@ use the <cite>global</cite> keyword.</p>
 <li><a class="reference internal" href="#functions">Functions</a></li>
 <li><a class="reference internal" href="#scope-rules">Scope rules</a></li>
 <li><a class="reference internal" href="#native-data-types">Native Data Types</a></li>
+<li><a class="reference internal" href="#user-type">User type</a></li>
 <li><a class="reference internal" href="#control-flow">Control Flow</a></li>
 <li><a class="reference internal" href="#errors-and-exceptions">Errors and Exceptions</a></li>
 </ul>
