@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="Clever v1.0.0 documentation" href="../../index.html" />
     <link rel="up" title="Internals" href="../index.html" />
-    <link rel="next" title="FAQ" href="../../faq.html" />
+    <link rel="next" title="Type System" href="index.html" />
     <link rel="prev" title="Creating a new module" href="../api/module.html" /> 
   </head>
   <body>
@@ -37,7 +37,7 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../faq.html" title="FAQ"
+          <a href="index.html" title="Type System"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../api/module.html" title="Creating a new module"
@@ -54,6 +54,92 @@
             
   <div class="section" id="clever-vm">
 <h1>Clever VM<a class="headerlink" href="#clever-vm" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
+<p>Clever VM works using TAC (thread-address code <a class="footnote-reference" href="#f1" id="id1">[1]</a>) to describe its intermediate
+code. Currently it&#8217;s represented as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="k">struct</span> <span class="n">IR</span> <span class="p">{</span>
+        <span class="n">Opcode</span> <span class="n">opcode</span><span class="p">;</span>
+        <span class="n">Operand</span> <span class="n">op1</span><span class="p">,</span> <span class="n">op2</span><span class="p">,</span> <span class="n">result</span><span class="p">;</span>
+        <span class="n">location</span> <span class="n">loc</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>See <cite>core/ir.h</cite> for futher details.</p>
+<p>Where the operand is represented as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="k">struct</span> <span class="n">Operand</span> <span class="p">{</span>
+        <span class="n">OperandType</span> <span class="n">op_type</span><span class="p">;</span>
+        <span class="n">ValueOffset</span> <span class="n">voffset</span><span class="p">;</span>
+        <span class="n">size_t</span> <span class="n">jmp_addr</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The operand can work with four diferent informations, see below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operand type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>FETCH_VAR</td>
+<td>For fetching a variable from the environment</td>
+</tr>
+<tr class="row-odd"><td>FETCH_CONST</td>
+<td>For fetching a constant from the environment</td>
+</tr>
+<tr class="row-even"><td>FETCH_TMP</td>
+<td>For fetching a temporary storage from the environment</td>
+</tr>
+<tr class="row-odd"><td>JMP_ADDR</td>
+<td>For jumping over the code</td>
+</tr>
+</tbody>
+</table>
+<p>For futher details on Environment, see our wiki <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
+<p>Basically, each function and class has its environment. Global scope and its
+local scope uses the same environment. In compiler-time we assign an identifier
+for each variable name to its respective index relative to the environment which
+it is found. For threating the relative location of the variable, we assign a
+identifier to the relative environment, beyond the index for the variable.</p>
+<p>Hence &#8216;FETCH_VAR` means that a variable must be fetched according to its relative
+environment location.</p>
+<p>For constant values (literal ones like <cite>true</cite>, <cite>1</cite>, etc), we do use a constant
+environment which is global for the execution, thus using <cite>FETCH_CONST</cite>
+to fetch the literal value based on the index associated to it on compile-time.</p>
+<p>The <cite>FETCH_TMP</cite> works under the temporary environment which is located in the
+current environment. This is, each environment can have its temporary environment
+to store computed result to future access. (e.g. 1 + 1 / 2)</p>
+<p>And about <cite>JMP_ADDR</cite> we can describe it as an address to the instrunction pointer
+to be jumped over, like a <cite>goto</cite> operation.</p>
+</div>
+<div class="section" id="opcodes">
+<h2>Opcodes<a class="headerlink" href="#opcodes" title="Permalink to this headline">¶</a></h2>
+<p>A list of our available opcodes can be seen in the file <cite>core/opcode.h</cite>.</p>
+<p>When building Clever in debug mode, the option <cite>-d</cite> is available to provide us
+a way to see the generated code. See below:</p>
+<div class="highlight-cpp"><pre>$ ./clever -d -qr &#x27;println(1);&#x27;
+[000] OP_SEND_VAL  |  0:  3  (FETCH_CONST) |          (UNUSED     ) |          (UNUSED     ) |
+[001] OP_FCALL     |  0: 41  (FETCH_VAR  ) |          (UNUSED     ) |   0:  0  (FETCH_TMP  ) |
+[002] OP_HALT      |         (UNUSED     ) |          (UNUSED     ) |          (UNUSED     ) |</pre>
+</div>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://en.wikipedia.org/wiki/Three_address_code">http://en.wikipedia.org/wiki/Three_address_code</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://github.com/clever-lang/clever/wiki/RFC-%230002----Lexical-scopes,-environments,-stack-frames-and-the-call-stack">https://github.com/clever-lang/clever/wiki/RFC-%230002&#8212;-Lexical-scopes,-environments,-stack-frames-and-the-call-stack</a></td></tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -65,12 +151,21 @@
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/logo.jpg" alt="Logo"/>
             </a></p>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Clever VM</a><ul>
+<li><a class="reference internal" href="#instructions">Instructions</a></li>
+<li><a class="reference internal" href="#opcodes">Opcodes</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="../api/module.html"
                         title="previous chapter">Creating a new module</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../../faq.html"
-                        title="next chapter">FAQ</a></p>
+  <p class="topless"><a href="index.html"
+                        title="next chapter">Type System</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/internals/vm/index.txt"
@@ -100,7 +195,7 @@
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../faq.html" title="FAQ"
+          <a href="index.html" title="Type System"
              >next</a> |</li>
         <li class="right" >
           <a href="../api/module.html" title="Creating a new module"
