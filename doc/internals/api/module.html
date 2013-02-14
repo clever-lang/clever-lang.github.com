@@ -24,7 +24,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Clever v1.0.0 documentation" href="../../index.html" /> 
+    <link rel="top" title="Clever v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Clever C++ API" href="../api/index.html" />
+    <link rel="next" title="Clever VM" href="../vm/index.html" />
+    <link rel="prev" title="Creating a new package" href="../api/package.html" /> 
   </head>
   <body>
     <div class="related">
@@ -33,7 +36,15 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="../vm/index.html" title="Clever VM"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../api/package.html" title="Creating a new package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Internals</a> &raquo;</li>
+          <li><a href="../api/index.html" accesskey="U">Clever C++ API</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -44,58 +55,380 @@
             
   <div class="section" id="creating-a-new-module">
 <h1>Creating a new module<a class="headerlink" href="#creating-a-new-module" title="Permalink to this headline">¶</a></h1>
-<p>Currently a module in Clever can contains: Classes, functions and
-constants. To implement a module, you need to create a class which
-inherits from Module class. Just like a package, the Module class also
-has a pure virtual method <tt class="docutils literal"><span class="pre">init()</span></tt> what performs similar task.</p>
-<p>See an example:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="cp">#include &quot;compiler/module.h&quot;</span>
+<p>Currently a module in Clever can contain:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Classes</li>
+<li>Functions</li>
+<li>Constants</li>
+</ul>
+</div></blockquote>
+<p>In order to create a module you need to create a class which inherits from
+the Module class. Just like a package, the Module class also has a pure
+virtual method <tt class="docutils literal"><span class="pre">init()</span></tt> that performs the initialization tasks.</p>
+<p>We will work our way into creating a Hello World module that will contain all above
+mentioned items.</p>
+</div>
+<div class="section" id="the-module">
+<h1>The Module<a class="headerlink" href="#the-module" title="Permalink to this headline">¶</a></h1>
+<p>This will be a module inside the std module and it will be called <em>std.hello</em>.</p>
+<dl class="docutils">
+<dt>This module will contain the following:</dt>
+<dd><ul class="first last simple">
+<li>A HelloWorld class with the following methods
+* sayHello()
+* sayMyName(whatToSay)</li>
+<li>A function called saySomething(name)</li>
+<li>A constant CONST_HELLO_WORLD</li>
+</ul>
+</dd>
+</dl>
+<p>We will discuss how the code needs to be implemented and the changes needed
+in the build scripts to get the code to compile and work!</p>
+<div class="section" id="recipe">
+<h2>Recipe<a class="headerlink" href="#recipe" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s start with a recipe of the steps we need to execute to accomplish the task
+of creating a module. This could be handy to be used when creating your modules.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Create the directory with our module name inside the top level module we want</li>
+<li>Create the module.h file as explained in the next section</li>
+<li>Create the module.cc file as explained in the next section</li>
+<li>Create the class that extends the Type class (hello.cc in the examples below)</li>
+<li>Create the CMakeLists.txt file in the directory we created in step 1</li>
+<li>Add a directive for our module in modules.cmake in the root directory</li>
+<li>Add the ifdef directive in the *_pkg.cc file from our top level module</li>
+<li>Add the ifdef directive in the *_forward.h file from our top level module</li>
+<li>Add the if (MOD_*) directive in the CMakeLists.txt from our top level module</li>
+<li>Compile the whole thing</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="creating-the-helloworld-class">
+<h2>Creating the HelloWorld class<a class="headerlink" href="#creating-the-helloworld-class" title="Permalink to this headline">¶</a></h2>
+<p>First thing we should create a directory called <strong>hello</strong> inside the <strong>modules/std/</strong>
+directory. This is where all our files will be placed.</p>
+<p>Create a file name <strong>module.cc</strong> and add the following code to it:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Clever programming language</span>
+<span class="cm"> * Copyright (c) Clever Team</span>
+<span class="cm"> *</span>
+<span class="cm"> * This file is distributed under the MIT license. See LICENSE for details.</span>
+<span class="cm"> */</span>
 
-<span class="k">namespace</span> <span class="n">clever</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">packages</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">std</span> <span class="p">{</span>
+<span class="cp">#include &quot;modules/std/hello/module.h&quot;</span>
+<span class="cp">#include &quot;modules/std/hello/hello.h&quot;</span>
 
-<span class="k">class</span> <span class="nc">IOModule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Module</span> <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-        <span class="n">IOModule</span><span class="p">()</span>
-              <span class="o">:</span> <span class="n">Module</span><span class="p">(</span><span class="s">&quot;io&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="k">namespace</span> <span class="n">clever</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">modules</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">std</span> <span class="p">{</span>
 
-        <span class="o">~</span><span class="n">IOModule</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+<span class="c1">// Creates the HelloModule::init() method</span>
+<span class="c1">// At the time of this writing, the CLEVER_MODULE_INIT expands to:</span>
+<span class="c1">// #define CLEVER_MODULE_INIT(x) void x::init()</span>
+<span class="c1">// This directive should always be used as the developers of the language</span>
+<span class="c1">// may have the need to change the way the init function works, and this lets</span>
+<span class="c1">// us do it easily.</span>
+<span class="c1">// This is the method that will be called when an &quot;import std.hello.*&quot; is</span>
+<span class="c1">// executed. It will cause all the &#39;things&#39; that the HelloModule exports to be</span>
+<span class="c1">// available for use in your Clever code!</span>
+<span class="n">CLEVER_MODULE_INIT</span><span class="p">(</span><span class="n">HelloModule</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Here we add the type to Clever. The name of the class to be used</span>
+  <span class="c1">// for instantiating the object is the name of the type that will be</span>
+  <span class="c1">// given in the Hello class constructor on hello.h</span>
+  <span class="c1">// This means that in order to get our object, we will need to do the</span>
+  <span class="c1">// following:</span>
+  <span class="c1">//</span>
+  <span class="c1">// var x = HelloWorld.new();</span>
+  <span class="n">addType</span><span class="p">(</span><span class="k">new</span> <span class="n">Hello</span><span class="p">);</span>
+<span class="p">}</span>
 
-        <span class="kt">void</span> <span class="n">init</span><span class="p">();</span>
-<span class="k">private</span><span class="o">:</span>
-        <span class="n">DISALLOW_COPY_AND_ASSIGN</span><span class="p">(</span><span class="n">IOModule</span><span class="p">);</span>
-<span class="p">};</span>
-
-<span class="p">}}}</span> <span class="c1">// clever::packages::std</span>
+<span class="p">}}}</span> <span class="c1">// clever::modules::std</span>
 </pre></div>
 </div>
-<p>In the <tt class="docutils literal"><span class="pre">init()</span></tt> process we must have to add the class/functions
-specifications. See below:</p>
-<div class="highlight-cpp"><div class="highlight"><pre><span class="k">namespace</span> <span class="n">clever</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">packages</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">std</span> <span class="p">{</span>
-
-<span class="k">namespace</span> <span class="n">io</span> <span class="p">{</span>
-<span class="cm">/**</span>
-<span class="cm"> * println(object a, [ ...])</span>
-<span class="cm"> * Prints the object values without trailing newline</span>
+<p>And the corresponding <strong>module.h</strong> file:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Clever programming language</span>
+<span class="cm"> * Copyright (c) Clever Team</span>
+<span class="cm"> *</span>
+<span class="cm"> * This file is distributed under the MIT license. See LICENSE for details.</span>
 <span class="cm"> */</span>
-<span class="k">static</span> <span class="n">CLEVER_FUNCTION</span><span class="p">(</span><span class="n">print</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">CLEVER_NUM_ARGS</span><span class="p">();</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-              <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">CLEVER_ARG_AS_STR</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-        <span class="p">}</span>
-<span class="p">}</span>
 
-<span class="p">}</span> <span class="c1">// namespace io</span>
+<span class="cp">#ifndef CLEVER_STD_HELLO_MODULE_H</span>
+<span class="cp">#define CLEVER_STD_HELLO_MODULE_H</span>
 
-<span class="cm">/**</span>
-<span class="cm"> * Initializes Standard module</span>
-<span class="cm"> */</span>
-<span class="kt">void</span> <span class="n">IOModule</span><span class="o">::</span><span class="n">init</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">addFunction</span><span class="p">(</span><span class="k">new</span> <span class="n">Function</span><span class="p">(</span><span class="s">&quot;print&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">CLEVER_NS_FNAME</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">print</span><span class="p">),</span> <span class="n">CLEVER_VOID</span><span class="p">))</span>
-                <span class="o">-&gt;</span><span class="n">setVariadic</span><span class="p">()</span>
-                <span class="o">-&gt;</span><span class="n">setMinNumArgs</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="cp">#include &quot;core/module.h&quot;</span>
 
-<span class="p">}</span> <span class="c1">// clever::packages::std</span>
+<span class="k">namespace</span> <span class="n">clever</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">modules</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">std</span> <span class="p">{</span>
+
+<span class="c1">/// Hello Module</span>
+<span class="k">class</span> <span class="nc">HelloModule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Module</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+  <span class="c1">// This here defines the name we will be using in the import directive</span>
+  <span class="c1">// in our .clv file</span>
+  <span class="c1">// For this case it will be</span>
+  <span class="c1">// import std.hello.*;</span>
+  <span class="n">HelloModule</span><span class="p">()</span>
+    <span class="o">:</span> <span class="n">Module</span><span class="p">(</span><span class="s">&quot;std.hello&quot;</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="o">~</span><span class="n">HelloModule</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="n">CLEVER_MODULE_VIRTUAL_METHODS_DECLARATION</span><span class="p">;</span>
+<span class="k">private</span><span class="o">:</span>
+  <span class="n">DISALLOW_COPY_AND_ASSIGN</span><span class="p">(</span><span class="n">HelloModule</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="p">}}}</span> <span class="c1">// clever::modules::std</span>
+
+<span class="cp">#endif </span><span class="c1">// CLEVER_STD_HELLO_MODULE_H</span>
 </pre></div>
+</div>
+<p>These are the files responsible for telling Clever that we have created
+a module that will be accessed by the import <em>std.hello</em> (as defined in the
+constructor for HelloModule).
+This is the default sketch for every module we will be writing for Clever.
+In the <strong>module.cc</strong> file we tell that this module is using the <strong>Hello</strong> class
+to create the type that is defined in the <strong>hello.h</strong> file (in the Hello class
+constructor).</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">CLEVER_MODULE_INIT</span><span class="p">(</span><span class="n">HelloModule</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">addType</span><span class="p">(</span><span class="k">new</span> <span class="n">Hello</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, what we need to do is to actually implement the <strong>Hello</strong> class where
+our Clever HelloWorld class will be, together with the <strong>saySomething()</strong>
+function and the CONST_HELLO_WORLD constant.</p>
+<p>For this, create a <strong>hello.h</strong> file in the same directory, and add the following
+content to it:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Clever programming language</span>
+<span class="cm"> * Copyright (c) Clever Team</span>
+<span class="cm"> *</span>
+<span class="cm"> * This file is distributed under the MIT license. See LICENSE for details.</span>
+<span class="cm"> */</span>
+
+<span class="cp">#ifndef CLEVER_STD_HELLO_H</span>
+<span class="cp">#define CLEVER_STD_HELLO_H</span>
+
+<span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &quot;core/cstring.h&quot;</span>
+<span class="cp">#include &quot;core/value.h&quot;</span>
+<span class="cp">#include &quot;types/type.h&quot;</span>
+
+<span class="k">namespace</span> <span class="n">clever</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">modules</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">std</span> <span class="p">{</span>
+
+<span class="k">class</span> <span class="nc">HelloObject</span> <span class="o">:</span> <span class="k">public</span> <span class="n">TypeObject</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="n">HelloObject</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="o">~</span><span class="n">HelloObject</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="k">private</span><span class="o">:</span>
+
+  <span class="n">DISALLOW_COPY_AND_ASSIGN</span><span class="p">(</span><span class="n">HelloObject</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Hello</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Type</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+  <span class="c1">// Here we define the name of the type we are creating (that is also used</span>
+  <span class="c1">// as the name of the class)</span>
+  <span class="c1">// This can be seen when we use the reflection API to get the type</span>
+  <span class="c1">// of our object</span>
+  <span class="c1">//</span>
+  <span class="c1">// import std.hello.*;</span>
+  <span class="c1">// import std.io.*;</span>
+  <span class="c1">// import std.reflection.*;</span>
+  <span class="c1">//</span>
+  <span class="c1">// var x = HelloWorld.new();</span>
+  <span class="c1">// println(type(x));</span>
+  <span class="n">Hello</span><span class="p">()</span>
+    <span class="o">:</span> <span class="n">Type</span><span class="p">(</span><span class="s">&quot;HelloWorld&quot;</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="o">~</span><span class="n">Hello</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="n">init</span><span class="p">();</span>
+
+  <span class="n">TypeObject</span><span class="o">*</span> <span class="n">allocData</span><span class="p">(</span><span class="n">CLEVER_TYPE_CTOR_ARGS</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="n">deallocData</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">);</span>
+
+  <span class="kt">void</span> <span class="n">dump</span><span class="p">(</span><span class="n">TypeObject</span><span class="o">*</span><span class="p">,</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="n">CLEVER_METHOD</span><span class="p">(</span><span class="n">ctor</span><span class="p">);</span>
+  <span class="n">CLEVER_METHOD</span><span class="p">(</span><span class="n">sayHello</span><span class="p">);</span>
+  <span class="n">CLEVER_METHOD</span><span class="p">(</span><span class="n">sayMyName</span><span class="p">);</span>
+
+<span class="k">private</span><span class="o">:</span>
+  <span class="n">DISALLOW_COPY_AND_ASSIGN</span><span class="p">(</span><span class="n">Hello</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="p">}}}</span> <span class="c1">// clever::modules::std</span>
+
+<span class="cp">#endif </span><span class="c1">// CLEVER_STD_HELLO_H</span>
+</pre></div>
+</div>
+<p>And the <strong>hello.cc</strong> file:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Clever programming language</span>
+<span class="cm"> * Copyright (c) Clever Team</span>
+<span class="cm"> *</span>
+<span class="cm"> * This file is distributed under the MIT license. See LICENSE for details.</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include &quot;core/value.h&quot;</span>
+<span class="cp">#include &quot;types/native_types.h&quot;</span>
+<span class="cp">#include &quot;core/modmanager.h&quot;</span>
+<span class="cp">#include &quot;modules/std/hello/hello.h&quot;</span>
+<span class="cp">#include &quot;modules/std/io/io.h&quot;</span>
+
+<span class="k">namespace</span> <span class="n">clever</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">modules</span> <span class="p">{</span> <span class="k">namespace</span> <span class="n">std</span> <span class="p">{</span>
+
+<span class="c1">// TODO: Explain this and how the HelloObject relates to the Hello class</span>
+<span class="n">TypeObject</span><span class="o">*</span> <span class="n">Hello</span><span class="o">::</span><span class="n">allocData</span><span class="p">(</span><span class="n">CLEVER_TYPE_CTOR_ARGS</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+  <span class="n">HelloObject</span><span class="o">*</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HelloObject</span><span class="p">();</span>
+
+  <span class="k">return</span> <span class="n">obj</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// This will be called to destroy our object</span>
+<span class="kt">void</span> <span class="n">Hello</span><span class="o">::</span><span class="n">deallocData</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">HelloObject</span><span class="o">*</span> <span class="n">intern</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">HelloObject</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">intern</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">delete</span> <span class="n">intern</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// This is the method that is called when you try to print the object</span>
+<span class="c1">// For example</span>
+<span class="c1">// import std.hello.*;</span>
+<span class="c1">// import std.io.*;</span>
+<span class="c1">//</span>
+<span class="c1">// var x = HelloWorld.new();</span>
+<span class="c1">// println(x);</span>
+<span class="kt">void</span> <span class="n">Hello</span><span class="o">::</span><span class="n">dump</span><span class="p">(</span><span class="n">TypeObject</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">)</span> <span class="k">const</span>
+<span class="p">{</span>
+  <span class="k">const</span> <span class="n">HelloObject</span><span class="o">*</span> <span class="n">uvalue</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">HelloObject</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">uvalue</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;You just printed a HelloWorld object!&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// This is the constructor method.</span>
+<span class="c1">// This is called every time you create a new instance of the HelloWorld class</span>
+<span class="c1">//</span>
+<span class="c1">// import std.hello.*;</span>
+<span class="c1">// var x = HelloWorld.new();</span>
+<span class="n">CLEVER_METHOD</span><span class="p">(</span><span class="n">Hello</span><span class="o">::</span><span class="n">ctor</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">result</span><span class="o">-&gt;</span><span class="n">setObj</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">allocData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">CLEVER_METHOD</span><span class="p">(</span><span class="n">Hello</span><span class="o">::</span><span class="n">sayHello</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello World!!&quot;</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">CLEVER_METHOD</span><span class="p">(</span><span class="n">Hello</span><span class="o">::</span><span class="n">sayMyName</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">clever_check_args</span><span class="p">(</span><span class="s">&quot;s&quot;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Your name is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">getStr</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">c_str</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+<span class="p">}</span>
+
+<span class="c1">// Type initialization</span>
+<span class="c1">// This will be called when you declare the import for this module in your</span>
+<span class="c1">// clever file</span>
+<span class="c1">//</span>
+<span class="c1">// import std.hello.*;</span>
+<span class="n">CLEVER_TYPE_INIT</span><span class="p">(</span><span class="n">Hello</span><span class="o">::</span><span class="n">init</span><span class="p">)</span>
+<span class="p">{</span>
+
+  <span class="c1">// Here we define the Hello::ctor method as the constructor for our class</span>
+  <span class="n">setConstructor</span><span class="p">((</span><span class="n">MethodPtr</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">Hello</span><span class="o">::</span><span class="n">ctor</span><span class="p">);</span>
+
+  <span class="c1">// Here we add the methods to our class</span>
+  <span class="n">addMethod</span><span class="p">(</span><span class="k">new</span> <span class="n">Function</span><span class="p">(</span><span class="s">&quot;sayHello&quot;</span><span class="p">,</span>  <span class="p">(</span><span class="n">MethodPtr</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">Hello</span><span class="o">::</span><span class="n">sayHello</span><span class="p">));</span>
+  <span class="n">addMethod</span><span class="p">(</span><span class="k">new</span> <span class="n">Function</span><span class="p">(</span><span class="s">&quot;sayMyName&quot;</span><span class="p">,</span>  <span class="p">(</span><span class="n">MethodPtr</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">Hello</span><span class="o">::</span><span class="n">sayMyName</span><span class="p">));</span>
+
+<span class="p">}</span>
+
+<span class="p">}}}</span> <span class="c1">// clever::modules::std</span>
+</pre></div>
+</div>
+<p>At this point the code is complete. All that is left to be done is adding
+some references to our module in the top level module headers and adding
+some compiler directives to the compilation scripts.</p>
+<p>In the <strong>modules/std/hello/</strong> directory create a CMakeLists.txt file with
+the following content</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">add_library</span><span class="p">(</span><span class="n">modules_std_hello</span> <span class="n">STATIC</span>
+  <span class="n">module</span><span class="p">.</span><span class="n">cc</span>
+  <span class="n">hello</span><span class="p">.</span><span class="n">cc</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In the file <strong>modules.cmake</strong> add the following at the begining of the file</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">clever_add_module</span><span class="p">(</span><span class="n">std_hello</span>      <span class="n">ON</span>  <span class="s">&quot;enable the hello module&quot;</span>      <span class="s">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And the following at the end</p>
+<div class="highlight-c++"><pre># std.hello
+if (MOD_STD_HELLO)
+  add_definitions(-DHAVE_MOD_STD_HELLO)
+endif (MOD_STD_HELLO)
+
+clever_module_msg(std_hello ${MOD_STD_HELLO})</pre>
+</div>
+<p>Open the file <strong>modules/std/std_pkg.cc</strong> and add the following:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifdef HAVE_MOD_STD_HELLO</span>
+  <span class="n">addModule</span><span class="p">(</span><span class="k">new</span> <span class="n">std</span><span class="o">::</span><span class="n">HelloModule</span><span class="p">);</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>Now open <strong>modules/std/std_forwarder.h</strong> and add this:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cp">#ifdef HAVE_MOD_STD_HELLO</span>
+<span class="cp"># include &quot;modules/std/hello/module.h&quot;</span>
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+<p>And finally, to finish it, add the following to <strong>modules/std/CMakeLists.txt</strong></p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">MOD_STD_HELLO</span><span class="p">)</span>
+  <span class="n">list</span><span class="p">(</span><span class="n">APPEND</span> <span class="n">CLEVER_MODULES</span> <span class="n">hello</span><span class="p">)</span>
+<span class="n">endif</span> <span class="p">(</span><span class="n">MOD_STD_HELLO</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After all this, all you have to do is compile everything!</p>
+<div class="highlight-c++"><pre>$ cmake . &amp;&amp; make</pre>
+</div>
+<p>As a test code, use the following:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">hello</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+<span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">reflection</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+
+<span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">HelloWorld</span><span class="p">.</span><span class="k">new</span><span class="p">();</span>
+<span class="n">println</span><span class="p">(</span><span class="n">type</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+<span class="n">println</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+<span class="n">x</span><span class="p">.</span><span class="n">sayHello</span><span class="p">();</span>
+<span class="n">x</span><span class="p">.</span><span class="n">sayMyName</span><span class="p">(</span><span class="s">&quot;Clever&quot;</span><span class="p">);</span>
+<span class="n">x</span><span class="p">.</span><span class="n">sayMyName</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-the-function">
+<h2>Adding the function<a class="headerlink" href="#adding-the-function" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="adding-the-constant">
+<h2>Adding the constant<a class="headerlink" href="#adding-the-constant" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
 </div>
 </div>
 
@@ -108,6 +441,24 @@ specifications. See below:</p>
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/logo.jpg" alt="Logo"/>
             </a></p>
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Creating a new module</a></li>
+<li><a class="reference internal" href="#the-module">The Module</a><ul>
+<li><a class="reference internal" href="#recipe">Recipe</a></li>
+<li><a class="reference internal" href="#creating-the-helloworld-class">Creating the HelloWorld class</a></li>
+<li><a class="reference internal" href="#adding-the-function">Adding the function</a></li>
+<li><a class="reference internal" href="#adding-the-constant">Adding the constant</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../api/package.html"
+                        title="previous chapter">Creating a new package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../vm/index.html"
+                        title="next chapter">Clever VM</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/internals/api/module.txt"
@@ -136,7 +487,15 @@ specifications. See below:</p>
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">Clever v1.0.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="../vm/index.html" title="Clever VM"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../api/package.html" title="Creating a new package"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Internals</a> &raquo;</li>
+          <li><a href="../api/index.html" >Clever C++ API</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
