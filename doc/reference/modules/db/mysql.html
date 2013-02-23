@@ -106,10 +106,9 @@ This class provides the following methods:</p>
 <p><strong>Example</strong></p>
 <div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">db</span><span class="p">.</span><span class="n">mysql</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
 <span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
-<span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">reflection</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
 
 <span class="n">var</span> <span class="n">m</span> <span class="o">=</span> <span class="n">Mysql</span><span class="p">.</span><span class="k">new</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;clever_db&quot;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;clever_db&quot;</span><span class="p">))</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;Connected!&quot;</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;Error connecting&quot;</span><span class="p">);</span>
@@ -133,16 +132,15 @@ is allowed per call.</p>
 <p><strong>Example</strong></p>
 <div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">db</span><span class="p">.</span><span class="n">mysql</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
 <span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
-<span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">reflection</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
 
 <span class="n">var</span> <span class="n">m</span> <span class="o">=</span> <span class="n">Mysql</span><span class="p">.</span><span class="k">new</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;clever_db&quot;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;clever_db&quot;</span><span class="p">))</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;Connected!&quot;</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;Error connecting&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">if</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;select * from users&quot;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;select * from users&quot;</span><span class="p">))</span> <span class="p">{</span>
         <span class="n">println</span><span class="p">(</span><span class="s">&quot;Succesfully executed query!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -167,23 +165,21 @@ If no more data is found, it returns <tt class="docutils literal"><span class="p
 <p><strong>Example</strong></p>
 <div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">db</span><span class="p">.</span><span class="n">mysql</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
 <span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
-<span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="n">reflection</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
 
 <span class="n">var</span> <span class="n">m</span> <span class="o">=</span> <span class="n">Mysql</span><span class="p">.</span><span class="k">new</span><span class="p">();</span>
-<span class="k">if</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;clever_db&quot;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;clever_db&quot;</span><span class="p">))</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;Connected!&quot;</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="s">&quot;Error connecting&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">if</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;select * from users&quot;</span><span class="p">))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;select * from users&quot;</span><span class="p">))</span> <span class="p">{</span>
         <span class="n">println</span><span class="p">(</span><span class="s">&quot;Succesfully executed query!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">fetchRow</span><span class="p">();</span>
-<span class="k">while</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">var</span> <span class="n">data</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">fetchRow</span><span class="p">())</span> <span class="p">{</span>
     <span class="n">println</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">fetchRow</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
