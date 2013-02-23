@@ -1,0 +1,252 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FFI - Foreign Function Interface &mdash; Clever v1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     'v1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="Clever v1.0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Standard package" href="../std/index.html" />
+    <link rel="next" title="I/O - Input/Output operation" href="../std/io.html" />
+    <link rel="prev" title="File" href="../std/file.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../std/io.html" title="I/O - Input/Output operation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../std/file.html" title="File"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="../../packages/index.html" >Packages</a> &raquo;</li>
+          <li><a href="../std/index.html" accesskey="U">Standard package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ffi-foreign-function-interface">
+<h1>FFI - Foreign Function Interface<a class="headerlink" href="#ffi-foreign-function-interface" title="Permalink to this headline">¶</a></h1>
+<p>The FFI module is the Clever interface to external functions. This module
+is a wrapper around the libffi library, which provides means to use C
+and C and C++ functions contained on dynamically linked libraries (.dll on
+Windows, .so on Linux).</p>
+<p>Using FFI, one can easily extend Clever without the need for recompilation.
+You could even load libraries written in other languages, as long as it&#8217;s
+available as a shared object (so) or dynamically linked library (dll).</p>
+<div class="section" id="a-simple-example">
+<h2>A Simple Example<a class="headerlink" href="#a-simple-example" title="Permalink to this headline">¶</a></h2>
+<p>In this section, it&#8217;s presented how to access some simple C functions
+using the FFI module.</p>
+<p>The first step is to describe the library&#8217;s interface. You can do this using
+an <cite>extern</cite> block like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="s">&quot;path&quot;</span> <span class="p">{</span>
+
+        <span class="cm">/*</span>
+<span class="cm">                Call function function_name_1 on library &quot;path&quot;.</span>
+<span class="cm">        */</span>
+
+        <span class="n">return_type</span> <span class="n">function_name_1</span><span class="p">(</span><span class="n">type_arg1</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">type_arg2</span> <span class="n">arg2</span><span class="p">,</span> <span class="p">...</span> <span class="p">);</span>
+
+        <span class="cm">/*</span>
+<span class="cm">                Call &quot;function_name_2_on_path&quot; on library &quot;path&quot; using</span>
+<span class="cm">                alias function_name_2.</span>
+<span class="cm">        */</span>
+        <span class="n">return_type</span> <span class="n">function_name_2</span><span class="p">(</span><span class="n">type_arg1</span>  <span class="n">arg1</span><span class="p">,</span> <span class="n">type_arg2</span> <span class="n">arg2</span><span class="p">,</span> <span class="p">...</span> <span class="p">)</span>
+                                <span class="n">as</span> <span class="s">&quot;function_name_2_on_path&quot;</span><span class="p">;</span>
+
+        <span class="p">...</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Where &#8220;path&#8221; is the path to shared library. The keyword <strong>extern</strong> is used
+to indicate that next function declarations are external functions contained
+on shared library &#8220;path&#8221;.</p>
+<p>After we&#8217;ve created the interface, we can use normally the functions defined.
+To illustrate, let&#8217;s build a shared library on Linux and call its functions
+using Clever. Obviously, first, we need write the C code:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="c1">//File: hello.c</span>
+<span class="c1">//Description: A very simple C library</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="kt">void</span> <span class="n">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello Clever FFI Module!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">printExt</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;S=%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">_sub</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To build the shared library using a Linux OS, we can use the command:</p>
+<div class="highlight-sh"><div class="highlight"><pre>gcc -fPIC -O3 -shared -c hello.c
+gcc -shared -Wl,-soname,hello.so -o hello.so hello.o -lc -ldl
+</pre></div>
+</div>
+<p>The last command generate a shared library called &#8220;hello.so&#8221;. Now, we can access
+its functions in Clever using:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="c1">//File: hello.clv</span>
+<span class="c1">//Description: A simple FFI example</span>
+
+<span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="s">&quot;./hello&quot;</span> <span class="p">{</span>
+        <span class="n">Void</span> <span class="n">hello</span><span class="p">();</span>
+        <span class="n">Int</span> <span class="n">add</span><span class="p">(</span><span class="n">Int</span> <span class="n">a</span><span class="p">,</span> <span class="n">Int</span> <span class="n">b</span><span class="p">);</span>
+        <span class="n">Void</span> <span class="n">printExt</span><span class="p">(</span><span class="n">String</span> <span class="n">s</span><span class="p">)</span> <span class="n">as</span> <span class="s">&quot;printExt&quot;</span><span class="p">;</span>
+        <span class="n">Int</span> <span class="n">sub</span><span class="p">(</span><span class="n">Int</span> <span class="n">a</span><span class="p">,</span> <span class="n">Int</span> <span class="n">b</span><span class="p">)</span> <span class="n">as</span> <span class="s">&quot;_sub&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">hello</span><span class="p">();</span>
+
+<span class="n">Int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;res=&quot;</span><span class="p">,</span><span class="n">res</span><span class="p">,</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="n">printExt</span><span class="p">(</span><span class="s">&quot;Ola!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="n">println</span><span class="p">(</span><span class="s">&quot; 10&quot;</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot; 7&quot;</span><span class="p">,</span> <span class="s">&quot;___&quot;</span><span class="p">,</span> <span class="s">&quot;  &quot;</span> <span class="o">+</span> <span class="n">sub</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">).</span><span class="n">toString</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>The alias is an important thing because allow we access in Clever functions with forbidden
+names like &#8220;_sub&#8221; on last example.</p>
+</div>
+<div class="section" id="the-ffiobject">
+<h2>The FFIObject<a class="headerlink" href="#the-ffiobject" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, we use a library that manipulates some kind of class/struct.
+Unfortunatelly, Clever doesn&#8217;t provide external class/struct mapping, but it
+does provide a workaround for these cases: the <cite>FFIObject</cite>.</p>
+<p>The <cite>FFIObject</cite> is a passive intermediate data structure that serves as a
+representation of the library&#8217;s data structures or just as placeholder to
+pointers and C++ references.</p>
+<p>Using the type alias, we can build ADT (Abstract Data Type) like:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+
+<span class="n">use</span> <span class="n">BigInt</span> <span class="n">as</span> <span class="n">std</span><span class="p">.</span><span class="n">ffi</span><span class="o">::</span><span class="n">FFIObject</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And, using the alias previously definied, we can build a simple interface to libgmp:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span class="n">import</span> <span class="n">std</span><span class="p">.</span><span class="o">*</span><span class="p">;</span>
+
+<span class="n">use</span> <span class="n">BigInt</span> <span class="n">as</span> <span class="n">std</span><span class="p">.</span><span class="n">ffi</span><span class="o">::</span><span class="n">FFIObject</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="s">&quot;./gmp_cpp&quot;</span> <span class="p">{</span>
+        <span class="n">BigInt</span> <span class="n">init_bi</span><span class="p">();</span>
+        <span class="n">BigInt</span> <span class="n">add_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">res</span><span class="p">,</span> <span class="n">BigInt</span> <span class="n">a</span><span class="p">,</span> <span class="n">BigInt</span> <span class="n">b</span><span class="p">);</span>
+        <span class="n">Void</span> <span class="n">set_str_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">op</span><span class="p">,</span> <span class="n">String</span> <span class="n">str</span><span class="p">,</span> <span class="n">Int</span> <span class="n">base</span><span class="p">);</span>
+        <span class="n">Void</span> <span class="n">set_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">op1</span><span class="p">,</span> <span class="n">BigInt</span> <span class="n">op2</span><span class="p">);</span>
+        <span class="n">Void</span> <span class="n">clear_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">x</span><span class="p">);</span>
+
+        <span class="n">String</span> <span class="n">get_str_bi</span><span class="p">(</span><span class="n">BigInt</span> <span class="n">op</span><span class="p">,</span> <span class="n">Int</span> <span class="n">base</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.jpg" alt="Logo"/>
+            </a></p>
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">FFI - Foreign Function Interface</a><ul>
+<li><a class="reference internal" href="#a-simple-example">A Simple Example</a></li>
+<li><a class="reference internal" href="#the-ffiobject">The FFIObject</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../std/file.html"
+                        title="previous chapter">File</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../std/io.html"
+                        title="next chapter">I/O - Input/Output operation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/reference/packages/std/ffi.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../std/io.html" title="I/O - Input/Output operation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../std/file.html" title="File"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="../../packages/index.html" >Packages</a> &raquo;</li>
+          <li><a href="../std/index.html" >Standard package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Clever Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

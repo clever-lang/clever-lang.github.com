@@ -1,0 +1,449 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Syntax &mdash; Clever v1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     'v1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Clever v1.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Language reference" href="index.html" />
+    <link rel="next" title="Types" href="types/index.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="types/index.html" title="Types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Language reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="syntax">
+<h1>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h1>
+<p>This document specifies the language&#8217;s syntax by showing some code examples.
+You can see the Clever parser grammar on <a class="reference internal" href="../internals/grammar.html"><em>Clever grammar</em></a> page.</p>
+<div class="section" id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Single line</li>
+</ul>
+<p>Everything in a line after <cite>//</cite> is considered comment and it is discarded by the Clever interpreter.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// Comment</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span> <span class="c1">// Performs a copy</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Multi-line</li>
+</ul>
+<p>Multi-line comments are similar to the C one.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="cm">/* This comment can be</span>
+<span class="cm">  splitted in several lines. */</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Clever is a dynamic typed language, so the type of a variable is bound in runtime. Use the keyword <cite>var</cite> to declare a variable.</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span> <span class="c1">// get_type(a) == String</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="nx">Foo</span><span class="p">.</span><span class="k">new</span><span class="p">(</span><span class="nx">arg1</span><span class="p">,</span> <span class="nx">arg2</span><span class="p">);</span> <span class="c1">// get_type(a) == Foo</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Unitialized variables have value of <cite>Null</cite></li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span><span class="p">;</span>
+<span class="nx">assert</span><span class="p">(</span><span class="nx">foo</span> <span class="o">==</span> <span class="kc">null</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Use the <cite>const</cite> qualifier to ensure that it will not be changed (i.e: assigned with other value)</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kr">const</span> <span class="nx">foo</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span><span class="p">;</span>
+<span class="nx">foo</span> <span class="o">=</span> <span class="s1">&#39;baz&#39;</span><span class="p">;</span> <span class="c1">// throws an Exception</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Functions are created with the <cite>function</cite> keyword</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Functions are objects and they can be assigned to variables</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">myfunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span> <span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Functions can be passed as argument to functions, and even to be used as default value for parameters</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">test</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">func</span> <span class="o">=</span> <span class="nx">println</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">func</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">test</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">);</span> <span class="c1">// prints &#39;hello&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Function call</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="nx">doFoo</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Chaining function call</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">abc</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">println</span><span class="p">(</span><span class="nx">abc</span><span class="p">()());</span> <span class="c1">// 3</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Variadic functions</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">show</span><span class="p">(</span><span class="nx">args</span><span class="p">...)</span> <span class="p">{</span>
+        <span class="nx">args</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">println</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">show</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;foobar&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Closure</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
+        <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="mi">321</span><span class="p">);</span>
+
+<span class="nx">print</span><span class="p">(</span><span class="nx">a</span><span class="p">(),</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="nx">b</span><span class="p">());</span> <span class="c1">// 123-321</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scope-rules">
+<h2>Scope rules<a class="headerlink" href="#scope-rules" title="Permalink to this headline">¶</a></h2>
+<p>Clever uses lexical scoping.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="o">++</span><span class="nx">foo</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">println</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="native-data-types">
+<h2>Native Data Types<a class="headerlink" href="#native-data-types" title="Permalink to this headline">¶</a></h2>
+<p>Examples of construction of native data types in Clever. For full reference (methods, properties, etc) please refer to: <a class="reference external" href="http://clever-lang.github.com/doc/reference/types/index.html">Types</a></p>
+<ul class="simple">
+<li>String</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">&#39;fooo&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Numeric</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">myint</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">otherint</span> <span class="o">=</span> <span class="mh">0xC1E4E8</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">adouble</span> <span class="o">=</span> <span class="mf">3.141517</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">biginteger</span> <span class="o">=</span> <span class="mi">1234567891011121314151617181920</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Boolean</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">bool</span> <span class="o">=</span> <span class="p">(</span><span class="kc">true</span> <span class="o">||</span> <span class="kc">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Array</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">Foo</span><span class="p">.</span><span class="k">new</span><span class="p">(</span><span class="nx">x</span><span class="p">)];</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Element access</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">z</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">at</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Write</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Map</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39;Clever&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">empty</span> <span class="o">=</span> <span class="p">{</span> <span class="o">:</span> <span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Access</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">map</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span> <span class="c1">// Null if an element with key &#39;name&#39; doesn&#39;t exists</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Set</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">map</span><span class="p">[</span><span class="mf">3.1415</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pi&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-type">
+<h2>User type<a class="headerlink" href="#user-type" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Creating a new type</li>
+</ul>
+<p>The name rule for type creationg is: the name must start with an upper case letter.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">a</span><span class="p">;</span>
+
+        <span class="kd">function</span> <span class="nx">setA</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="nx">v</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="kd">function</span> <span class="nx">getA</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Property access</li>
+</ul>
+<p>As seen below, access to properties are done by using the <cite>this</cite> variable.</p>
+<ul class="simple">
+<li>Class constructor</li>
+</ul>
+<p>To declare a constructor you need to declare a function using the same name
+than the type itself. See below:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kr">class</span> <span class="nx">Foo</span> <span class="p">{</span>
+        <span class="kd">function</span> <span class="nx">Foo</span><span class="p">()</span> <span class="p">{</span>
+                <span class="c1">// Constructor</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="control-flow">
+<h2>Control Flow<a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h2>
+<p>On condition, just the literal boolean <cite>false</cite> and <cite>null</cite> are evaluated to false
+value. Everything else is a true value. This means the integer zero is evaluated
+to true.</p>
+<ul class="simple">
+<li>If statements</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// okay, 0 is true!</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>While</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">while</span> <span class="p">(</span><span class="nx">foo</span><span class="p">()</span> <span class="o">||</span> <span class="nx">bar</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nx">doBaz</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>For</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">update</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nx">entry</span><span class="o">:</span> <span class="nx">container</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Spawn statement creates a new thread or a thread vector.</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">spawn</span> <span class="nx">thread_name</span> <span class="p">{</span>
+        <span class="p">...</span> <span class="c1">// statements block.</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="p">...</span> <span class="c1">// do something.</span>
+        <span class="p">}</span>
+
+        <span class="nx">foo</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// or...</span>
+
+<span class="nx">spawn</span> <span class="nx">thread_name</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">{</span> <span class="c1">// create two threads.</span>
+        <span class="p">...</span> <span class="c1">// do something.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Wait statement is used to waiting a thread or a thread vector finish.</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">wait</span> <span class="nx">thread_name</span><span class="p">;</span> <span class="c1">// wait threads called &quot;thread_name&quot;.</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Critical statement defines a critical section in the thread.</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">spawn</span> <span class="nx">t</span> <span class="p">{</span>
+        <span class="nx">critical</span> <span class="p">{</span>
+                <span class="nx">doSomeCriticalOperation</span><span class="p">();</span> <span class="c1">// here, you can read a file or a standard stream.</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="errors-and-exceptions">
+<h2>Errors and Exceptions<a class="headerlink" href="#errors-and-exceptions" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Syntax error</p>
+<blockquote>
+<div><p>On syntax error, the compilation is aborted.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Runtime error</p>
+<blockquote>
+<div><p>Some internal methods can throw exceptions.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Throwing exception</p>
+</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">try</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">println</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span> <span class="c1">// test</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo.jpg" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Syntax</a><ul>
+<li><a class="reference internal" href="#comments">Comments</a></li>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#scope-rules">Scope rules</a></li>
+<li><a class="reference internal" href="#native-data-types">Native Data Types</a></li>
+<li><a class="reference internal" href="#user-type">User type</a></li>
+<li><a class="reference internal" href="#control-flow">Control Flow</a></li>
+<li><a class="reference internal" href="#errors-and-exceptions">Errors and Exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="types/index.html"
+                        title="next chapter">Types</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/syntax.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="types/index.html" title="Types"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="../index.html">Clever v1.0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Language reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Clever Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
